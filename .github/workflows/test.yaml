@@ -1,0 +1,19 @@
+name: test
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Start"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - run: |
+          ls -al
+          cd .github/workflows/
+          ls -al
+      - run: echo "Stop"
