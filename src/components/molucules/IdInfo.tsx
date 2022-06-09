@@ -12,18 +12,18 @@ class IdInfo extends React.Component<{}, State> {
     this.handleClick = this.handleClick.bind(this);
   }
   label = 'ID取得';
-  timetreeApi = 'https://timetreeapis.com';
-  // MEMO：ひとまず直書き。今後envに格納、もしくはinput.valueにする予定
-  timetreePersonalAccessTokens =
-    'S1rJHodOSNCVTUOuHmfKEOS0cxk4JcedcIG0jOG3Pd6ppSqv';
+  timetreeApi = process.env.REACT_APP_TIMETREE_API;
 
-  handleClick(process: string) {
+  handleClick(path: string) {
     if (!this.state.inputPersonalAccessToken) {
       return console.log('inputValue is unset');
     }
-    fetch(`${this.timetreeApi}/${process}`, {
+    fetch(`${this.timetreeApi}/${path}`, {
       headers: {
-        Authorization: `Bearer ${this.state.inputPersonalAccessToken}`,
+        Authorization: `Bearer ${
+          this.state.inputPersonalAccessToken ??
+          process.env.REACT_APP_TIMETREE_PERSONAL_ACCESSTOKEN
+        }`,
       },
     })
       .then(res => {
