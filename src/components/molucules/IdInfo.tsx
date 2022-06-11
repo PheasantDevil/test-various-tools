@@ -27,13 +27,13 @@ class IdInfo extends React.Component<{}, State> {
       },
     })
       .then(res => {
-        if (res.status === 401) {
-          return console.log('error 401');
+        if (!res.ok) {
+          this.setState({ idInfo: `error-code: ${res.status}` });
+          throw new Error(res.statusText)
         }
-        return res.json();
+          return res.json();
       })
       .then(res => {
-        console.log('res.data', res.data);
         this.setState({ idInfo: res.data.id });
       })
       // this.state.inputPersonalAccessTokenが適切な値でない場合
@@ -43,19 +43,33 @@ class IdInfo extends React.Component<{}, State> {
   }
 
   changeInput(inputValue: string) {
-    console.log(inputValue);
+    // MEMO:入力時都度登録処理が実行されるのを防ぎたい（入力後一定時間後setStateされるようにしたい）
+    // clearTimeout(timer);
+    // setTimeout(() => {
     this.setState({ inputPersonalAccessToken: inputValue });
+    //   localStorage.setItem('test', `this is ${inputValue}!`);
+    // }, 5000);
   }
+
+  blurInput(inputValue: string) {
+    this.setState({ inputPersonalAccessToken: inputValue });
+    localStorage.setItem('localStorage.inputValue', inputValue);
+  }
+
   render(): React.ReactNode {
     return (
       <>
         <input
           type="text"
-          value={this.state.inputPersonalAccessToken}
+          value={
+            // localStorage.getItem('localStorage.inputValue') ??
+            this.state.inputPersonalAccessToken
+          }
           onChange={event => this.changeInput(event.target.value)}
+          onBlur={event => this.blurInput(event.target.value)}
         />
         <button onClick={() => this.handleClick('user')}>{this.label}</button>
-        <p className="IdInfo">{`ID:${this.state.idInfo}`}</p>
+        <p className="IdInfo">{`ID: ${this.state.idInfo}`}</p>
       </>
     );
   }
