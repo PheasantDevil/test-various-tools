@@ -1,5 +1,5 @@
 import React from 'react';
-import './IdInfo.css';
+import './IdInfo.scss';
 
 interface State {
   idInfo: string;
@@ -29,11 +29,12 @@ class IdInfo extends React.Component<{}, State> {
       .then(res => {
         if (!res.ok) {
           this.setState({ idInfo: `error-code: ${res.status}` });
-          throw new Error(res.statusText)
+          throw new Error(res.statusText);
         }
-          return res.json();
+        return res.json();
       })
       .then(res => {
+        console.log(res.data);
         this.setState({ idInfo: res.data.id });
       })
       // this.state.inputPersonalAccessTokenが適切な値でない場合
