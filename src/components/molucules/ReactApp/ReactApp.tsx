@@ -1,13 +1,16 @@
 import React from 'react';
 import './ReactApp.scss';
-import logo from './logo.svg';
+
+// エラー出るためコメントアウト
+// TS2307: Cannot find module '/logo.svg' or its corresponding type declarations.
+// import logo from '/logo.svg';
 
 class ReactApp extends React.Component {
   render(): React.ReactNode {
     return (
       <>
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <p>
             Edit <code>src/App.tsx</code> and save to reload.
           </p>
