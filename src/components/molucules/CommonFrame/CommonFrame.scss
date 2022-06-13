@@ -1,0 +1,30 @@
+.frame {
+  &__title {
+    margin: 0em;
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    padding: 0 0.5em;
+    height: 1.5em;
+    line-height: 1.5em;
+    color: #ffffff;
+    background: #1ea36a;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+    margin-top: 10px;
+  }
+  &__content {
+    display: flex;
+    flex-flow: row nowrap;
+    background: rgba(255, 255, 255, 0);
+    border: solid 3px #1ea36a;
+    border-radius: 0 5px 5px;
+    padding: 20px;
+    font-size: 100%;
+    margin-bottom: 10px;
+    &.idInfo {
+      display: block;
+    }
+  }
+}
