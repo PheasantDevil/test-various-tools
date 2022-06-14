@@ -9,11 +9,12 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Start"
       - name: Checkout
-        uses: actions/checkout@v2
-      - run: |
-          ls -al
-          cd .github/workflows/
-          ls -al
-      - run: echo "Stop"
+        uses: actions/checkout@v3
+
+      - name: GitHub Action for npx
+        uses: mikeal/npx@1.0.0
+
+      - id: prettier-check
+        run: npx prettier --check .
+        shell: bash
