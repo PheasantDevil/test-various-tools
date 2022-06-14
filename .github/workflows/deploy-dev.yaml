@@ -1,0 +1,20 @@
+name: test
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: GitHub Action for Yarn
+        uses: Borales/actions-yarn@v3.0.0
+
+      - name: deploy GithubPages
+        run: yarn deploy
