@@ -1,12 +1,12 @@
 import React from 'react';
-import './CommonFrame.scss';
+import './component-frame.scss';
 
 interface Props {
   viewComponent: React.ReactNode; // frame内で表示させたいComponent
   componentName?: string;
 }
 
-class CommonFrame extends React.Component<Props, {}> {
+class ComponentFrame extends React.Component<Props, {}> {
   //   constructor(props: any) {
   //     super(props);
   //     // this.state = { };
@@ -24,4 +24,4 @@ class CommonFrame extends React.Component<Props, {}> {
   }
 }
 
-export default CommonFrame;
+export default ComponentFrame;
