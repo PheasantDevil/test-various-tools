@@ -1,5 +1,5 @@
 import React from 'react';
-import './app.scss';
+import './App.scss';
 // import ReactApp from './components/molucules/ReactApp/ReactApp';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ChoreTimeTree from './components/organisms/ChoreTimeTree';
