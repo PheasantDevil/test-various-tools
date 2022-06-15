@@ -1,5 +1,5 @@
 import React from 'react';
-import './IdInfo.scss';
+import './id-info.scss';
 
 interface State {
   idInfo: string;
@@ -70,7 +70,7 @@ class IdInfo extends React.Component<{}, State> {
           onBlur={event => this.blurInput(event.target.value)}
         />
         <button onClick={() => this.handleClick('user')}>{this.label}</button>
-        <p className="IdInfo">{`ID: ${this.state.idInfo}`}</p>
+        <p className="id-info">{`ID: ${this.state.idInfo}`}</p>
       </>
     );
   }
