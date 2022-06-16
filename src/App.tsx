@@ -8,27 +8,27 @@ import Home from './components/organisms/Home';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        {/* <div className="App">
+      {/* <BrowserRouter> */}
+      {/* <div className="App">
           <CommonFrame viewComponent={<IdInfo />} componentName="idInfo" />
         </div> */}
-        <h1>各ページへのリンクはこちら</h1>
-        <ul>
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li>
-            <a href="/timetree">chore TimeTree</a>
-          </li>
-          <li>
-            <a href="/about">About</a>
-          </li>
-          <li>
-            <a href="/contact">Contact</a>
-          </li>
-        </ul>
-        {route()}
-      </BrowserRouter>
+      <h1>各ページへのリンクはこちら</h1>
+      <ul>
+        <li>
+          <a href="/">Home</a>
+        </li>
+        <li>
+          <a href="/timetree">chore TimeTree</a>
+        </li>
+        <li>
+          <a href="/about">About</a>
+        </li>
+        <li>
+          <a href="/contact">Contact</a>
+        </li>
+      </ul>
+      {route()}
+      {/* </BrowserRouter> */}
     </div>
   );
 

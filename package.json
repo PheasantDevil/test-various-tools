@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://pheasantdevil.github.io/",
+  "test": "",
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
@@ -70,11 +71,13 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "cp:404": "cp docs/index.html docs/404.html",
     "test": "react-scripts test",
     "format": "prettier --write . ",
     "rm": "rm -rf docs",
     "mv": "mv build docs",
     "git": "git add . && git commit && git push origin develop",
+    "reDeploy": "npm run rm && npm run build && npm run mv",
     "deploy": "npm run rm && npm run build && npm run mv && npm run git"
   },
   "eslintConfig": {
