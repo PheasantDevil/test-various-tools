@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - develop
+permissions: write-all
 
 jobs:
   deploy-dev:
@@ -15,6 +16,8 @@ jobs:
 
       - name: GitHub Action for Yarn
         uses: Borales/actions-yarn@v3.0.0
+        with:
+          persist-credentials: false
 
       - name: Build
         run: sudo yarn preDeploy
