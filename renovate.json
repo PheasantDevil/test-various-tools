@@ -2,32 +2,49 @@
   "token": "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",
   "repositories": ["PheasantDevil/test-various-tools"],
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
-  "ignorePresets": [":prHourlyLimit2"],
-  "timezone": "Asia/Tokyo",
+  "extends": ["config:base", ":timezone(Asia/Tokyo)"],
   "dependencyDashboard": false,
-  "automerge": true,
-  "branchConcurrentLimit": 0,
-  "rebaseWhen": "behind-base-branch",
+  "labels": ["dependencies", "renovate"],
+  "schedule": ["after 10pm and before 5am every weekday", "every weekend"],
+  "pin": {
+    "automerge": true
+  },
+  "npm": {
+    "rangeStrategy": "bump"
+  },
   "packageRules": [
     {
-      "matchDepTypes": ["engines"],
-      "enabled": false
+      "packagePatterns": ["^@types/"],
+      "automerge": true,
+      "major": {
+        "automerge": false
+      }
     },
     {
-      "description": "Ignore all minor and patch update for renovate",
-      "matchPackageNames": ["renovate"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "enabled": false
+      "groupName": "jest",
+      "automerge": true,
+      "sourceUrlPrefixes": [
+        "https://github.com/facebook/jest",
+        "https://github.com/kulshekhar/ts-jest"
+      ]
+    },
+    {
+      "groupName": "linters",
+      "automerge": true,
+      "extends": ["packages:linters"],
+      "packageNames": ["prettier"],
+      "packagePatterns": ["^@typescript-eslint/"]
     },
     {
       "matchDepTypes": ["githubActionsForWorkflows"],
       "groupName": "actions for github actions workflows",
+      "automerge": true,
       "groupSlug": "actions-update-for-github-actions-workflows"
     },
     {
       "matchDepTypes": ["dockerImageForWorkflows"],
       "groupName": "docker image for github actions workflows",
+      "automerge": true,
       "groupSlug": "docker-image-update-for-github-actions-workflows"
     }
   ]
