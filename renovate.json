@@ -1,5 +1,34 @@
 {
-  "extends": [
-    "config:base"
+  "token": "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",
+  "repositories": ["PheasantDevil/test-various-tools"],
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
+  "ignorePresets": [":prHourlyLimit2"],
+  "timezone": "Asia/Tokyo",
+  "dependencyDashboard": false,
+  "automerge": true,
+  "branchConcurrentLimit": 0,
+  "rebaseWhen": "behind-base-branch",
+  "packageRules": [
+    {
+      "matchDepTypes": ["engines"],
+      "enabled": false
+    },
+    {
+      "description": "Ignore all minor and patch update for renovate",
+      "matchPackageNames": ["renovate"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "enabled": false
+    },
+    {
+      "matchDepTypes": ["githubActionsForWorkflows"],
+      "groupName": "actions for github actions workflows",
+      "groupSlug": "actions-update-for-github-actions-workflows"
+    },
+    {
+      "matchDepTypes": ["dockerImageForWorkflows"],
+      "groupName": "docker image for github actions workflows",
+      "groupSlug": "docker-image-update-for-github-actions-workflows"
+    }
   ]
 }
