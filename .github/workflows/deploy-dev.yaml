@@ -20,7 +20,12 @@ jobs:
           persist-credentials: false
 
       - name: Build
-        run: sudo yarn preDeploy
+        run: |
+          sudo rm -rf node_modules
+          sudo yarn install
+          yarn rm
+          sudo yarn build
+          yarn mv
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.3
