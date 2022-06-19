@@ -1,4 +1,4 @@
-name: test
+name: deploy-dev
 on:
   push:
     branches:
@@ -17,4 +17,4 @@ jobs:
         uses: Borales/actions-yarn@v3.0.0
 
       - name: deploy GithubPages
-        run: yarn deploy
+        run: sudo yarn deploy
