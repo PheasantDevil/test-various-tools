@@ -7,6 +7,8 @@
   "labels": ["dependencies", "renovate"],
   "schedule": ["after 10pm and before 5am every weekday", "every weekend"],
   "automerge": true,
+  "ignorePresets": [":prHourlyLimit2"],
+  "branchConcurrentLimit": 0,
   "pin": {
     "automerge": true
   },
