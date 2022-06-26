@@ -5,6 +5,7 @@
   "extends": ["config:base", ":timezone(Asia/Tokyo)"],
   "dependencyDashboard": false,
   "labels": ["dependencies", "renovate"],
+  "schedule": ["after 9pm and before 11pm every weekday", "every weekend"],
   "automerge": true,
   "ignorePresets": [":prHourlyLimit2"],
   "branchConcurrentLimit": 0,
