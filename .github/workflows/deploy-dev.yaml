@@ -4,10 +4,12 @@ on:
     branches:
       - develop
       - feature/issue000-check-gh-pages
-permissions: write-all
+# permissions:
+#   contents: write
 
 jobs:
   deploy-dev:
+    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
     environment: dev
 
@@ -26,12 +28,10 @@ jobs:
           sudo yarn install
           yarn rm
           sudo yarn build
-          yarn mv
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: docs # The folder that the build-storybook script generates files.
+          GITHUB_TOKEN: ${{ secrets.TOKEN_ADMIN }}
+          FOLDER: build # The folder that the build-storybook script generates files.
           CLEAN: true # Automatically remove deleted files from the deploy branch

@@ -12,12 +12,14 @@ class CommonFrame extends React.Component<Props, {}> {
   //   super(props);
   //   // this.state = { };
   // }
-  frameTitle = this.props.frameTitle ? this.props.frameTitle : 'Title';
+  // frameTitle = this.props.frameTitle ? this.props.frameTitle : 'Title';
 
   render(): React.ReactNode {
     return (
       <div className="frame">
-        <div className="frame__title">{this.frameTitle}</div>
+        <div className="frame__title">
+          {this.props.frameTitle ? this.props.frameTitle : 'Title'}
+        </div>
         <div className={`frame__content ${this.props.componentName}`}>
           {this.props.viewComponent}
         </div>

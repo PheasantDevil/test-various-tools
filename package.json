@@ -73,11 +73,15 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "format": "prettier --write . ",
-    "rm": "rm -rf docs",
-    "mv": "mv build docs",
-    "git": "git add . && git commit && git push origin develop",
-    "preDeploy": "npm run rm && npm run build && npm run mv",
-    "deploy": "npm run rm && npm run build && npm run mv && npm run git"
+    "rm": "rm -rf ${npm_config_directly}",
+    "mv": "mv ${npm_config_before} ${npm_config_after}",
+    "git:checkout": "git checkout ${npm_config_branch}",
+    "git:add": "git add .",
+    "git:commit": "git commit${npm_config_message}",
+    "git:push": "git push${npm_config_isForce} origin ${npm_config_branch}",
+    "git": "npm run git:checkout -branch='gh-pages' && npm run rm -directly='node_modules' && npm run git:add && npm run git:push -message='fix: update docs' && npm run git:push -branch='gh-pagea",
+    "preDeploy": "npm run rm --directly='docs' && npm run build && npm run mv build docs",
+    "deploy": "npm run rm -directly='docs' && npm run build && npm run mv build docs && npm run git"
   },
   "eslintConfig": {
     "extends": [
