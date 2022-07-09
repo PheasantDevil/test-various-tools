@@ -12,7 +12,7 @@ function App() {
       <CommonFrame
         viewComponent={<IdInfo />}
         componentName="idInfo"
-        frameTitle="認可ユーザーIDの取得"
+        frameTitle="認可ユーザーIDの取得-test"
       />
       <CommonFrame
         viewComponent={<ShortcutList />}

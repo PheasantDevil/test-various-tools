@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - develop
+      - feature/issue000-check-gh-pages
 permissions: write-all
 
 jobs:
