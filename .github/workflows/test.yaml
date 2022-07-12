@@ -12,35 +12,20 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest] # "GitHub Action for npx" is only supported [macos-latest, windows-latest]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
       - name: GitHub Action for npx
         uses: mikeal/npx@v2.0.0
-
+      - name: GitHub Action for Yarn
+        uses: Borales/actions-yarn@v3.0.0
+        with:
+          persist-credentials: false
       - id: prettier-check
         run: npx prettier --check .
         shell: bash
-
-      - name: Extract branch name
-        shell: bash
-        run: |
-          echo ${GITHUB_REF}
-          echo ${GITHUB_REF#refs/heads/}
-          echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
-        id: extract_branch
-
-      - name: Print branch name
-        env:
-          BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
-        run: echo $BRANCH_NAME
-
-      - name: Print branch name2
-        env:
-          BRANCH_NAME: ${{ github.ref_name }}
-        run: echo $BRANCH_NAME
+      - name: TestRun javascript File in CI
+        run: node feature/tools/send_slack/send_slack.js
 
   for-python:
     runs-on: ${{ matrix.os }}
@@ -62,3 +47,5 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Display Python version
         run: python --version
+      # - name: TestRun Python File
+      #   run: python feature/tools/test.py
