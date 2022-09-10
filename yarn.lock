@@ -7888,15 +7888,15 @@ jest-validate@^29.0.3:
     leven "^3.1.0"
     pretty-format "^29.0.3"
 
-jest-watch-typeahead@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/jest-watch-typeahead/-/jest-watch-typeahead-2.1.1.tgz#927ad0f6fe2859f7b47d7ef26633f2877e806ea7"
-  integrity sha512-yKrj2VBDJoMLlD6lpfWfIQpSSC1GFGvPHaLnJWRhL/PiLlBDRWFwCYe21h0o+peqcVlilQhIa2g2vncaBXS73g==
+jest-watch-typeahead@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/jest-watch-typeahead/-/jest-watch-typeahead-2.2.0.tgz#b8e4cf57c25ec85b98058f8fa413bd841344de4a"
+  integrity sha512-cM3Qbw9P+jUYxqUSt53KdDDFRVBG96XA6bsIAG0zffl/gUkNK/kjWcCX7R559BgPWs2/UDrsJHPIw2f6b0qZCw==
   dependencies:
     ansi-escapes "^5.0.0"
     chalk "^4.0.0"
-    jest-regex-util "^28.0.0"
-    jest-watcher "^28.0.0"
+    jest-regex-util "^29.0.0"
+    jest-watcher "^29.0.0"
     slash "^4.0.0"
     string-length "^5.0.1"
     strip-ansi "^7.0.1"
@@ -7941,7 +7941,7 @@ jest-watcher@^28.0.0:
     jest-util "^28.1.1"
     string-length "^4.0.1"
 
-jest-watcher@^29.0.3:
+jest-watcher@^29.0.0, jest-watcher@^29.0.3:
   version "29.0.3"
   resolved "https://registry.yarnpkg.com/jest-watcher/-/jest-watcher-29.0.3.tgz#8e220d1cc4f8029875e82015d084cab20f33d57f"
   integrity sha512-tQX9lU91A+9tyUQKUMp0Ns8xAcdhC9fo73eqA3LFxP2bSgiF49TNcc+vf3qgGYYK9qRjFpXW9+4RgF/mbxyOOw==
