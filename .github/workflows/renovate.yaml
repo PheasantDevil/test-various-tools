@@ -22,7 +22,7 @@ jobs:
         uses: mikeal/npx@v2.0.0
 
       - name: Self-hosted Renovate
-        uses: renovatebot/github-action@v34.32.0
+        uses: renovatebot/github-action@v34.34.0
         with:
           configurationFile: renovate.json
           token: ${{ secrets.RENOVATE_ACCESS_TOKEN }}
