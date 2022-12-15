@@ -18,9 +18,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: GitHub Action for npx
-        uses: mikeal/npx@v2.0.0
-
       - name: Self-hosted Renovate
         uses: renovatebot/github-action@v34.55.0
         with:
