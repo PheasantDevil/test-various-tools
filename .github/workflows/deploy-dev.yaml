@@ -17,6 +17,7 @@ jobs:
       - name: GitHub Action for Yarn
         uses: Borales/actions-yarn@v4.2.0
         with:
+          cmd: install # will run `yarn install` command
           persist-credentials: false
 
       - name: Build
