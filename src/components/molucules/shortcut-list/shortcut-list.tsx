@@ -10,7 +10,7 @@ class ShortcutList extends React.Component<{}, {}> {
   //   super(props);
   // }
 
-  render(): React.ReactNode {
+  override render(): React.ReactNode {
     return (
       <>
         <ul>

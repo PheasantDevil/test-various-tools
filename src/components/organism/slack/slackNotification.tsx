@@ -77,7 +77,7 @@ class SlackNotification extends React.Component<{}, State> {
     }
   }
 
-  render(): React.ReactNode {
+  override render(): React.ReactNode {
     return (
       <div className="slackNotification">
         <div className="slackNotification__content">

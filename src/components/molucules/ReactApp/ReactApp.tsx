@@ -6,7 +6,7 @@ import './ReactApp.scss';
 // import logo from '/logo.svg';
 
 class ReactApp extends React.Component {
-  render(): React.ReactNode {
+  override render(): React.ReactNode {
     return (
       <>
         <header className="App-header">

@@ -12,7 +12,7 @@ class IdInfo extends React.Component<{}, State> {
     this.handleClick = this.handleClick.bind(this);
   }
   label = 'ID取得';
-  timetreeApi = process.env.REACT_APP_TIMETREE_API;
+  timetreeApi = process.env['REACT_APP_TIMETREE_API'];
 
   handleClick(path: string) {
     if (!this.state.inputPersonalAccessToken) {
@@ -22,7 +22,7 @@ class IdInfo extends React.Component<{}, State> {
       headers: {
         Authorization: `Bearer ${
           this.state.inputPersonalAccessToken ??
-          process.env.REACT_APP_TIMETREE_PERSONAL_ACCESSTOKEN
+          process.env['REACT_APP_TIMETREE_PERSONAL_ACCESSTOKEN']
         }`,
       },
     })
@@ -57,7 +57,7 @@ class IdInfo extends React.Component<{}, State> {
     localStorage.setItem('localStorage.inputValue', inputValue);
   }
 
-  render(): React.ReactNode {
+  override render(): React.ReactNode {
     return (
       <>
         <input
