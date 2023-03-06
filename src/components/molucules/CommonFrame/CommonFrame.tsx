@@ -7,14 +7,14 @@ interface Props {
   frameTitle?: string;
 }
 
-class CommonFrame extends React.Component<Props, {}> {
+class CommonFrame extends React.Component<Props> {
   // constructor(props: any) {
   //   super(props);
   //   // this.state = { };
   // }
   frameTitle = this.props.frameTitle ? this.props.frameTitle : 'Title';
 
-  render(): React.ReactNode {
+  override render(): React.ReactNode {
     return (
       <div className="frame">
         <div className="frame__title">{this.frameTitle}</div>
