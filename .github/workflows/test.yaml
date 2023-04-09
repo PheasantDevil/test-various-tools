@@ -64,3 +64,22 @@ jobs:
         #   python-version: ${{ matrix.python-version }}
       - name: Display Python version
         run: python --version
+
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest] # "GitHub Action for npx" is only supported [macos-latest, windows-latest]
+    env:
+      TimeTreeToken: ${{secret.TIMEREE_PERSONAL_ACCESS_TOKEN}}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: GitHub Action for npx
+        uses: mikeal/npx@v2.0.0
+
+      - name: test curl
+        run: |
+          curl -H "Accept: application/vnd.timetree.v1+json" -H "Authorization: Bearer $TimeTreeToken" https://timetreeapis.com/user
