@@ -1,0 +1,32 @@
+name: Auto Post to Hatena Blog
+
+on:
+  # schedule:
+  #   - cron: '0 0 * * *'
+  push:
+    branches:
+      - 'feature/**'
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
+        run: |
+          pip install openai requests
+
+      - name: Generate and post article
+        run: |
+          python src/trial/autoPost.py
+        env:
+          HATENA_BLOG_USERNAME: ${{ secrets.HATENA_BLOG_USERNAME }}
+          HATENA_BLOG_API_KEY: ${{ secrets.HATENA_API_KEY }}
+          OPEN_API_KEY: ${{ secrets.OPEN_API_KEY }}
