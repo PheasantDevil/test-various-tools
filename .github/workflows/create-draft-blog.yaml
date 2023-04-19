@@ -5,7 +5,7 @@ on: create
 jobs:
   create-blog:
     name: Create draft blog
-    if: ${{ contains(github.ref, 'blog-create') }}
+    # if: ${{ contains(github.ref, 'blog-create') }}
     runs-on: ubuntu-latest
     steps:
       - name: Set up Go

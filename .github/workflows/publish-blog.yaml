@@ -7,9 +7,9 @@ on:
 jobs:
   publish-blog:
     name: Publish blog
-    if: |
-      contains(github.head_ref, 'blog-create') &&
-        contains(github.event.pull_request.labels.*.name, 'approve release')
+    # if: |
+    #   contains(github.head_ref, 'blog-create') &&
+    #     contains(github.event.pull_request.labels.*.name, 'approve release')
     runs-on: ubuntu-latest
     steps:
       - name: Set up Go

@@ -9,7 +9,7 @@ on:
 jobs:
   update-blog:
     name: Update hatena blog
-    if: ${{ contains(github.head_ref, 'blog-create') }}
+    # if: ${{ contains(github.head_ref, 'blog-create') }}
     runs-on: ubuntu-latest
     steps:
       - name: Set up Go
