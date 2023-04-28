@@ -16,7 +16,7 @@ class ShortcutList extends React.Component<{}, {}> {
         <ul>
           <li>
             <a
-              href="https://pheasantdevil.github.io/test-storybook"
+              href="https://644b0f326c28f39b18380657-gjtqtcvumw.chromatic.com"
               target="_blank"
               rel="noreferrer"
             >
