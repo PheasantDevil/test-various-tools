@@ -36,7 +36,7 @@
     "browserslist": "4.21.5",
     "camelcase": "7.0.1",
     "case-sensitive-paths-webpack-plugin": "2.4.0",
-    "css-loader": "6.7.3",
+    "css-loader": "6.7.4",
     "css-minimizer-webpack-plugin": "5.0.0",
     "dotenv": "16.0.3",
     "dotenv-expand": "10.0.0",
