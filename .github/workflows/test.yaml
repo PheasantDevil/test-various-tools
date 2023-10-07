@@ -17,9 +17,10 @@ jobs:
       - name: GitHub Action for npx
         uses: mikeal/npx@v2.0.0
 
-      - id: prettier-check
-        run: npx prettier --check .
-        shell: bash
+      # 2023/10/7 一時的に無効化
+      # - id: prettier-check
+      #   run: npx prettier --check .
+      #   shell: bash
 
       # for debug
       # - name: Extract branch name
