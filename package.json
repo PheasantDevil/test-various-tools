@@ -76,7 +76,7 @@
     "style-loader": "3.3.3",
     "tailwindcss": "3.3.5",
     "terser-webpack-plugin": "5.3.9",
-    "typescript": "5.2.2",
+    "typescript": "5.3.2",
     "web-vitals": "3.5.0",
     "webpack": "5.89.0",
     "webpack-dev-server": "4.15.1",
