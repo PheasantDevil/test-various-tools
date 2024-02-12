@@ -6680,10 +6680,10 @@ dot-case@^3.0.4:
     no-case "^3.0.4"
     tslib "^2.0.3"
 
-dotenv-expand@11.0.2:
-  version "11.0.2"
-  resolved "https://registry.yarnpkg.com/dotenv-expand/-/dotenv-expand-11.0.2.tgz#20e90b9966a794cf42bcecb2454ad5fe6a239771"
-  integrity sha512-G4mKf8gvpPmuFaXowAL/oN8sxKViyIMH6HYt1SDRK8N/mVl+WnTIZqS0PK1L94jnS6WDUy3uMgPym+ZxsZIPIA==
+dotenv-expand@11.0.3:
+  version "11.0.3"
+  resolved "https://registry.yarnpkg.com/dotenv-expand/-/dotenv-expand-11.0.3.tgz#eec206931b994840061655e721fe75d777d47f13"
+  integrity sha512-qkK+MLTvZ86oq4sjMqGpUN/38SQ/J37mny88CsEUFFjb2MBVz06a809ri0QeVDXpxkvZkXzqjGUb0M1R6n3OGw==
   dependencies:
     dotenv "^16.4.1"
 
