@@ -17,6 +17,7 @@ const GitHubPage: React.FC = () => {
     handleCloseIssue,
     handleReopenIssue,
     handleClosePR,
+    handleRequestReview,
   } = useGitHub();
 
   const [ownerInput, setOwnerInput] = useState(owner);
@@ -26,6 +27,7 @@ const GitHubPage: React.FC = () => {
     'all',
   );
   const [prFilter, setPrFilter] = useState<'all' | 'open' | 'closed'>('all');
+  const [reviewerInput, setReviewerInput] = useState<string>('');
 
   useEffect(() => {
     if (owner && repo) {
@@ -48,6 +50,13 @@ const GitHubPage: React.FC = () => {
     if (prFilter === 'all') return true;
     return pr.state === prFilter;
   });
+
+  const handleReviewRequest = (prNumber: number) => {
+    if (!reviewerInput.trim()) return;
+    const reviewers = reviewerInput.split(',').map(r => r.trim());
+    handleRequestReview(prNumber, reviewers);
+    setReviewerInput('');
+  };
 
   return (
     <div className="github-page">
@@ -127,6 +136,7 @@ const GitHubPage: React.FC = () => {
                       key={pr.id}
                       pullRequest={pr}
                       onClose={handleClosePR}
+                      onRequestReview={handleReviewRequest}
                     />
                   ))
                 ) : (

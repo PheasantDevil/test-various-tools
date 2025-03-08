@@ -1,4 +1,10 @@
-import React, { ReactNode, createContext, useContext, useState } from 'react';
+import React, {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import {
   Issue,
   closeIssue,
@@ -9,7 +15,9 @@ import {
   PullRequest,
   closePullRequest,
   getPullRequests,
+  requestReview,
 } from '../services/github/pullRequestService';
+import { getRecentRepositories, saveRecentRepository } from '../utils/storage';
 
 interface GitHubContextType {
   owner: string;
@@ -18,12 +26,14 @@ interface GitHubContextType {
   pullRequests: PullRequest[];
   loading: boolean;
   error: string | null;
+  recentRepositories: { owner: string; repo: string }[];
   setOwnerRepo: (owner: string, repo: string) => void;
   fetchIssues: () => Promise<void>;
   fetchPullRequests: () => Promise<void>;
   handleCloseIssue: (issueNumber: number) => Promise<void>;
   handleReopenIssue: (issueNumber: number) => Promise<void>;
   handleClosePR: (prNumber: number) => Promise<void>;
+  handleRequestReview: (prNumber: number, reviewers: string[]) => Promise<void>;
 }
 
 const GitHubContext = createContext<GitHubContextType | undefined>(undefined);
@@ -37,10 +47,19 @@ export const GitHubProvider: React.FC<{ children: ReactNode }> = ({
   const [pullRequests, setPullRequests] = useState<PullRequest[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [recentRepositories, setRecentRepositories] = useState<
+    { owner: string; repo: string }[]
+  >([]);
+
+  useEffect(() => {
+    setRecentRepositories(getRecentRepositories());
+  }, []);
 
   const setOwnerRepo = (newOwner: string, newRepo: string) => {
     setOwner(newOwner);
     setRepo(newRepo);
+    saveRecentRepository(newOwner, newRepo);
+    setRecentRepositories(getRecentRepositories());
   };
 
   const fetchIssues = async () => {
@@ -128,6 +147,23 @@ export const GitHubProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
+  const handleRequestReview = async (prNumber: number, reviewers: string[]) => {
+    if (!owner || !repo) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      await requestReview(owner, repo, prNumber, reviewers);
+      await fetchPullRequests();
+    } catch (err) {
+      setError('Failed to request review');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <GitHubContext.Provider
       value={{
@@ -137,12 +173,14 @@ export const GitHubProvider: React.FC<{ children: ReactNode }> = ({
         pullRequests,
         loading,
         error,
+        recentRepositories,
         setOwnerRepo,
         fetchIssues,
         fetchPullRequests,
         handleCloseIssue,
         handleReopenIssue,
         handleClosePR,
+        handleRequestReview,
       }}
     >
       {children}

@@ -1,19 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PullRequest } from '../../../services/github/pullRequestService';
 import { formatDate } from '../../../utils/dateUtils';
 
 interface PullRequestCardProps {
   pullRequest: PullRequest;
   onClose: (prNumber: number) => void;
+  onRequestReview: (prNumber: number, reviewers: string[]) => void;
 }
 
 const PullRequestCard: React.FC<PullRequestCardProps> = ({
   pullRequest,
   onClose,
+  onRequestReview,
 }) => {
   const isApproved = pullRequest.reviews?.some(
     review => review.state === 'APPROVED',
   );
+
+  const [reviewerInput, setReviewerInput] = useState<string>('');
+
+  const handleReviewRequest = () => {
+    if (!reviewerInput.trim()) return;
+    const reviewers = reviewerInput.split(',').map(r => r.trim());
+    onRequestReview(pullRequest.number, reviewers);
+    setReviewerInput('');
+  };
 
   return (
     <div className="pr-card">
@@ -50,6 +61,16 @@ const PullRequestCard: React.FC<PullRequestCardProps> = ({
         {pullRequest.state === 'open' && (
           <button onClick={() => onClose(pullRequest.number)}>Close PR</button>
         )}
+      </div>
+      <div className="pr-review-request">
+        <h4>レビュー依頼</h4>
+        <input
+          type="text"
+          value={reviewerInput}
+          onChange={e => setReviewerInput(e.target.value)}
+          placeholder="レビュアーのGitHubユーザー名を入力"
+        />
+        <button onClick={handleReviewRequest}>レビュー依頼</button>
       </div>
     </div>
   );
