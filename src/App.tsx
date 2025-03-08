@@ -1,23 +1,36 @@
+import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.scss';
-// import ReactApp from './components/molucules/ReactApp/ReactApp';
-import CommonFrame from 'components/molucules/CommonFrame/CommonFrame';
-import ShortcutList from 'components/molucules/shortcut-list/shortcut-list';
-import SlackNotification from 'components/organism/slack/slackNotification';
+import { GitHubProvider } from './contexts/GitHubContext';
+import { SlackProvider } from './contexts/SlackContext';
+import GitHubPage from './pages/github/GitHubPage';
+import SlackPage from './pages/slack/SlackPage';
 
 function App() {
   return (
     <div className="App">
-      {/* <ReactApp /> */}
-      <CommonFrame
-        viewComponent={<SlackNotification />}
-        componentName="slackNotification"
-        frameTitle="Slack通知"
-      />
-      <CommonFrame
-        viewComponent={<ShortcutList />}
-        componentName="shortcutList"
-        frameTitle="ショットカット一覧"
-      />
+      <GitHubProvider>
+        <SlackProvider>
+          <Router>
+            <nav className="app-nav">
+              <ul>
+                <li>
+                  <Link to="/">GitHub 管理</Link>
+                </li>
+                <li>
+                  <Link to="/slack">Slack 管理</Link>
+                </li>
+              </ul>
+            </nav>
+
+            <main className="app-content">
+              <Routes>
+                <Route path="/" element={<GitHubPage />} />
+                <Route path="/slack" element={<SlackPage />} />
+              </Routes>
+            </main>
+          </Router>
+        </SlackProvider>
+      </GitHubProvider>
     </div>
   );
 }
