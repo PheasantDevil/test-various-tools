@@ -1,6 +1,6 @@
 import ErrorMessage from 'components/atoms/ErrorMessage';
 import LoadingSpinner from 'components/atoms/LoadingSpinner';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import IssueCard from '../../components/molecules/github/IssueCard';
 import PullRequestCard from '../../components/molecules/github/PullRequestCard';
 import { useGitHub } from '../../contexts/GitHubContext';
@@ -40,10 +40,13 @@ const GitHubPage: React.FC = () => {
     }
   }, [owner, repo]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setOwnerRepo(ownerInput, repoInput);
-  };
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      setOwnerRepo(ownerInput, repoInput);
+    },
+    [ownerInput, repoInput, setOwnerRepo],
+  );
 
   const filteredIssues = issues.filter(issue => {
     if (issueFilter === 'all') return true;
@@ -55,12 +58,15 @@ const GitHubPage: React.FC = () => {
     return pr.state === prFilter;
   });
 
-  const handleReviewRequest = (prNumber: number) => {
-    if (!reviewerInput.trim()) return;
-    const reviewers = reviewerInput.split(',').map(r => r.trim());
-    handleRequestReview(prNumber, reviewers);
-    setReviewerInput('');
-  };
+  const handleReviewRequest = useCallback(
+    (prNumber: number) => {
+      if (!reviewerInput.trim()) return;
+      const reviewers = reviewerInput.split(',').map(r => r.trim());
+      handleRequestReview(prNumber, reviewers);
+      setReviewerInput('');
+    },
+    [reviewerInput, handleRequestReview],
+  );
 
   return (
     <div className="github-page">

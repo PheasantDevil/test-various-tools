@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Issue } from 'services/issueService';
 import { formatDate } from '../../../utils/dateUtils';
 import './IssueCard.scss';
@@ -46,4 +46,4 @@ const IssueCard: React.FC<IssueCardProps> = ({ issue, onClose, onReopen }) => {
   );
 };
 
-export default IssueCard;
+export default memo(IssueCard);

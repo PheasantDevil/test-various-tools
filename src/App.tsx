@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import {
   Link,
   Route,
@@ -7,10 +7,9 @@ import {
   useLocation,
 } from 'react-router-dom';
 import './App.scss';
+import LoadingSpinner from './components/atoms/LoadingSpinner';
 import { GitHubProvider } from './contexts/GitHubContext';
 import { SlackProvider } from './contexts/SlackContext';
-import GitHubPage from './pages/github/GitHubPage';
-import SlackPage from './pages/slack/SlackPage';
 
 // アクティブなリンクを判定するためのコンポーネント
 const NavLink = ({
@@ -46,6 +45,10 @@ const NavBar = () => {
   );
 };
 
+// 遅延ローディング
+const GitHubPage = lazy(() => import('./pages/github/GitHubPage'));
+const SlackPage = lazy(() => import('./pages/slack/SlackPage'));
+
 function App() {
   return (
     <div className="App">
@@ -55,10 +58,12 @@ function App() {
             <NavBar />
 
             <main className="app-content">
-              <Routes>
-                <Route path="/" element={<GitHubPage />} />
-                <Route path="/slack" element={<SlackPage />} />
-              </Routes>
+              <Suspense fallback={<LoadingSpinner />}>
+                <Routes>
+                  <Route path="/" element={<GitHubPage />} />
+                  <Route path="/slack" element={<SlackPage />} />
+                </Routes>
+              </Suspense>
             </main>
           </Router>
         </SlackProvider>
