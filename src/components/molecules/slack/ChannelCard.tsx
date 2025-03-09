@@ -3,6 +3,7 @@ import {
   SlackChannel,
   SlackMessage,
 } from '../../../services/slack/channelService';
+import './ChannelCard.scss';
 
 interface ChannelCardProps {
   channel: SlackChannel;

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { SlackChannel } from 'services/slack/channelService';
+import { SlackChannel } from '../../../services/slack/channelService';
 import { NotificationSetting } from '../../../services/slack/notificationService';
+import './NotificationSettingForm.scss';
 
 interface NotificationSettingFormProps {
   channels: SlackChannel[];
