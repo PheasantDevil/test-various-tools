@@ -23,59 +23,70 @@ export interface SlackMessage {
   type: string;
 }
 
-export const getLogChannels = async (): Promise<SlackChannel[]> => {
-  const response = await slackApiClient.get('/conversations.list', {
-    params: {
-      types: 'public_channel',
-      exclude_archived: true,
-    },
-  });
+export const getChannels = async (): Promise<SlackChannel[]> => {
+  try {
+    const response = await slackApiClient.get('/conversations.list');
+    return response.data.channels;
+  } catch (error) {
+    console.error('Failed to fetch channels:', error);
+    throw error;
+  }
+};
 
-  // "log"を含むチャンネルのみをフィルタリング
-  return response.data.channels.filter((channel: SlackChannel) =>
-    channel.name.includes('log'),
-  );
+export const getLogChannels = async (): Promise<SlackChannel[]> => {
+  try {
+    const channels = await getChannels();
+    return channels.filter(channel => channel.name.includes('log'));
+  } catch (error) {
+    console.error('Failed to fetch log channels:', error);
+    throw error;
+  }
 };
 
 export const getLatestMessage = async (
   channelId: string,
 ): Promise<SlackMessage | null> => {
-  const response = await slackApiClient.get('/conversations.history', {
-    params: {
-      channel: channelId,
-      limit: 1,
-    },
-  });
-
-  if (response.data.messages && response.data.messages.length > 0) {
-    return response.data.messages[0];
+  try {
+    const response = await slackApiClient.get('/conversations.history', {
+      params: {
+        channel: channelId,
+        limit: 1,
+      },
+    });
+    return response.data.messages.length > 0 ? response.data.messages[0] : null;
+  } catch (error) {
+    console.error('Failed to fetch latest message:', error);
+    throw error;
   }
-  return null;
+};
+
+export const getChannelHistory = async (
+  channelId: string,
+  limit = 10,
+): Promise<SlackMessage[]> => {
+  try {
+    const response = await slackApiClient.get('/conversations.history', {
+      params: {
+        channel: channelId,
+        limit,
+      },
+    });
+    return response.data.messages;
+  } catch (error) {
+    console.error('Failed to fetch channel history:', error);
+    throw error;
+  }
 };
 
 export const getGithubAppPermissions = async (
   channelId: string,
 ): Promise<string[]> => {
-  // この実装は仮のものです。実際にはSlack APIを使用してGitHubアプリの権限を取得する必要があります
-  // 実際の実装では、Slack APIのapps.permissionsなどを使用する必要があるかもしれません
+  // 実際のAPIがない場合はモックデータを返す
   return [
     'issues:read',
     'issues:write',
     'pull_requests:read',
     'pull_requests:write',
+    'workflows:read',
   ];
-};
-
-export const getChannelHistory = async (
-  channelId: string,
-  limit: number = 10,
-): Promise<SlackMessage[]> => {
-  const response = await slackApiClient.get('/conversations.history', {
-    params: {
-      channel: channelId,
-      limit,
-    },
-  });
-
-  return response.data.messages || [];
 };

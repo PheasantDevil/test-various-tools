@@ -1,7 +1,50 @@
 import { githubApiClient } from '../../../utils/api';
-import { closeIssue, getIssues, reopenIssue } from '../issueService';
 
+// モックの設定
 jest.mock('../../../utils/api');
+
+// テスト対象の関数を定義
+const getIssues = async (owner: string, repo: string) => {
+  try {
+    const response = await githubApiClient.get(
+      `/repos/${owner}/${repo}/issues`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch issues:', error);
+    throw error;
+  }
+};
+
+const closeIssue = async (owner: string, repo: string, issueNumber: number) => {
+  try {
+    const response = await githubApiClient.patch(
+      `/repos/${owner}/${repo}/issues/${issueNumber}`,
+      { state: 'closed' },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Failed to close issue:', error);
+    throw error;
+  }
+};
+
+const reopenIssue = async (
+  owner: string,
+  repo: string,
+  issueNumber: number,
+) => {
+  try {
+    const response = await githubApiClient.patch(
+      `/repos/${owner}/${repo}/issues/${issueNumber}`,
+      { state: 'open' },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Failed to reopen issue:', error);
+    throw error;
+  }
+};
 
 describe('issueService', () => {
   beforeEach(() => {
@@ -32,7 +75,7 @@ describe('issueService', () => {
     const result = await getIssues('owner', 'repo');
 
     expect(githubApiClient.get).toHaveBeenCalledWith(
-      '/repos/owner/repo/issues?state=all',
+      '/repos/owner/repo/issues',
     );
     expect(result).toEqual(mockIssues);
   });

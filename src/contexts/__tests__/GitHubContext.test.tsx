@@ -1,12 +1,38 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
-import * as issueService from '../../services/github/issueService';
-import * as prService from '../../services/github/pullRequestService';
-import * as storageUtils from '../../utils/storage';
 import { GitHubProvider, useGitHub } from '../GitHubContext';
 
-jest.mock('../../services/github/issueService');
-jest.mock('../../services/github/pullRequestService');
-jest.mock('../../utils/storage');
+// モックをインポート
+const issueService = jest.requireMock('../../services/github/issueService');
+const prService = jest.requireMock('../../services/github/pullRequestService');
+const storageUtils = jest.requireMock('../../utils/storage');
+
+// モックの設定
+beforeEach(() => {
+  jest.resetAllMocks();
+
+  // storageUtilsのモックメソッドを設定
+  storageUtils.getItem = jest.fn().mockReturnValue(null);
+  storageUtils.setItem = jest.fn();
+  storageUtils.removeItem = jest.fn();
+  storageUtils.getRecentRepositories = jest.fn().mockReturnValue([]);
+  storageUtils.saveRecentRepository = jest.fn();
+
+  // issueServiceのモックメソッドを設定
+  issueService.fetchIssues = jest.fn().mockResolvedValue([]);
+  issueService.getIssues = jest.fn().mockResolvedValue([]);
+  issueService.createIssue = jest.fn().mockResolvedValue({});
+  issueService.updateIssue = jest.fn().mockResolvedValue({});
+  issueService.closeIssue = jest.fn().mockResolvedValue({});
+  issueService.reopenIssue = jest.fn().mockResolvedValue({});
+
+  // prServiceのモックメソッドを設定
+  prService.fetchPullRequests = jest.fn().mockResolvedValue([]);
+  prService.getPullRequests = jest.fn().mockResolvedValue([]);
+  prService.createPullRequest = jest.fn().mockResolvedValue({});
+  prService.updatePullRequest = jest.fn().mockResolvedValue({});
+  prService.closePullRequest = jest.fn().mockResolvedValue({});
+  prService.requestReview = jest.fn().mockResolvedValue({});
+});
 
 // テスト用のコンポーネント
 const TestComponent = () => {

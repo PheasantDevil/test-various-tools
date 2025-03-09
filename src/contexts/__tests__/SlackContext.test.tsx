@@ -1,9 +1,30 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
-import * as channelService from '../../services/slack/channelService';
 import { SlackProvider, useSlack } from '../SlackContext';
 
-jest.mock('../../services/slack/channelService');
-jest.mock('../../services/slack/notificationService');
+// モックをインポート
+const channelService = jest.requireMock('../../services/slack/channelService');
+const notificationService = jest.requireMock(
+  '../../services/slack/notificationService',
+);
+
+// モックの設定
+beforeEach(() => {
+  jest.resetAllMocks();
+
+  // channelServiceのモックメソッドを設定
+  channelService.fetchChannels = jest.fn().mockResolvedValue([]);
+  channelService.getLogChannels = jest.fn().mockResolvedValue([]);
+  channelService.fetchChannelHistory = jest.fn().mockResolvedValue([]);
+  channelService.getChannelHistory = jest.fn().mockResolvedValue([]);
+  channelService.joinChannel = jest.fn().mockResolvedValue({});
+  channelService.leaveChannel = jest.fn().mockResolvedValue({});
+  channelService.getLatestMessage = jest.fn().mockResolvedValue(null);
+  channelService.getGithubAppPermissions = jest.fn().mockResolvedValue([]);
+
+  // notificationServiceのモックメソッドを設定
+  notificationService.sendNotification = jest.fn().mockResolvedValue({});
+  notificationService.getNotifications = jest.fn().mockResolvedValue([]);
+});
 
 // テスト用のコンポーネント
 const TestComponent = () => {

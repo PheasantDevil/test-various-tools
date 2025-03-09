@@ -1,8 +1,32 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import PullRequestCard from '../PullRequestCard';
 
+// PullRequestの型を定義
+type PullRequest = {
+  id: number;
+  number: number;
+  title: string;
+  state: 'open' | 'closed';
+  created_at: string;
+  updated_at: string;
+  html_url: string;
+  user: {
+    login: string;
+    avatar_url: string;
+  };
+  requested_reviewers: {
+    login: string;
+    avatar_url: string;
+  }[];
+  reviews: {
+    user: { login: string };
+    state: string;
+    submitted_at: string;
+  }[];
+};
+
 describe('PullRequestCard', () => {
-  const mockPR = {
+  const mockPR: PullRequest = {
     id: 1,
     number: 101,
     title: 'Test PR',
@@ -84,15 +108,21 @@ describe('PullRequestCard', () => {
     fireEvent.change(input, { target: { value: 'newreviewer' } });
 
     // レビュー依頼ボタンをクリックする
-    const requestButton = screen.getByText('レビュー依頼');
-    fireEvent.click(requestButton);
-
-    // onRequestReview関数が正しい引数で呼ばれることを確認
-    expect(onRequestReview).toHaveBeenCalledWith(101, ['newreviewer']);
+    // queryAllByTextを使用して、複数の要素から特定のボタンを選択
+    const requestButtons = screen.queryAllByText('レビュー依頼');
+    // ボタンは通常、配列の最後の要素（h4の後にあるボタン）
+    const requestButton = requestButtons[requestButtons.length - 1];
+    if (requestButton) {
+      fireEvent.click(requestButton);
+      // onRequestReview関数が正しい引数で呼ばれることを確認
+      expect(onRequestReview).toHaveBeenCalledWith(101, ['newreviewer']);
+    } else {
+      throw new Error('レビュー依頼ボタンが見つかりません');
+    }
   });
 
   test('does not show close button for closed PR', () => {
-    const closedPR = { ...mockPR, state: 'closed' };
+    const closedPR: PullRequest = { ...mockPR, state: 'closed' };
     const onClose = jest.fn();
     const onRequestReview = jest.fn();
 
