@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
+import { SlackChannel } from 'services/slack/channelService';
+import ErrorMessage from '../../components/atoms/ErrorMessage';
+import LoadingSpinner from '../../components/atoms/LoadingSpinner';
 import ChannelCard from '../../components/molecules/slack/ChannelCard';
+import NotificationSettingForm from '../../components/molecules/slack/NotificationSettingForm';
 import { useSlack } from '../../contexts/SlackContext';
+import './SlackPage.scss';
 
 const SlackPage: React.FC = () => {
   const {
@@ -12,43 +17,95 @@ const SlackPage: React.FC = () => {
     error,
     fetchChannels,
     selectChannel,
+    fetchNotificationSettings,
+    fetchChannelHistory,
+    channelHistory,
+    saveNotificationSetting,
   } = useSlack();
 
   useEffect(() => {
     fetchChannels();
+    fetchNotificationSettings();
   }, []);
+
+  const handleSelectChannel = async (channel: SlackChannel) => {
+    await selectChannel(channel);
+    await fetchChannelHistory(channel.id, 20);
+  };
 
   return (
     <div className="slack-page">
       <h1>Slack チャンネル管理</h1>
 
-      {error && <div className="error">{error}</div>}
+      {error && (
+        <ErrorMessage
+          message={error}
+          onRetry={() => {
+            fetchChannels();
+            if (selectedChannel) {
+              fetchChannelHistory(selectedChannel.id);
+            }
+          }}
+        />
+      )}
 
       {loading ? (
-        <div className="loading">読み込み中...</div>
+        <LoadingSpinner />
       ) : (
         <>
-          <h2>ログチャンネル一覧</h2>
-          {channels.length > 0 ? (
-            <div className="channels-list">
-              {channels.map(channel => (
-                <ChannelCard
-                  key={channel.id}
-                  channel={channel}
-                  latestMessage={
-                    selectedChannel?.id === channel.id ? latestMessage : null
-                  }
-                  permissions={
-                    selectedChannel?.id === channel.id ? permissions : []
-                  }
-                  isSelected={selectedChannel?.id === channel.id}
-                  onSelect={selectChannel}
-                />
-              ))}
+          <div className="channels-section">
+            <h2>ログチャンネル一覧</h2>
+            {channels.length > 0 ? (
+              <div className="channels-list">
+                {channels.map(channel => (
+                  <ChannelCard
+                    key={channel.id}
+                    channel={channel}
+                    latestMessage={
+                      selectedChannel?.id === channel.id ? latestMessage : null
+                    }
+                    permissions={
+                      selectedChannel?.id === channel.id ? permissions : []
+                    }
+                    isSelected={selectedChannel?.id === channel.id}
+                    onSelect={handleSelectChannel}
+                  />
+                ))}
+              </div>
+            ) : (
+              <p>ログチャンネルはありません</p>
+            )}
+          </div>
+
+          {selectedChannel && channelHistory.length > 0 && (
+            <div className="channel-history">
+              <h3>#{selectedChannel.name} のメッセージ履歴</h3>
+              <div className="message-list">
+                {channelHistory.map(message => (
+                  <div key={message.ts} className="message-item">
+                    <div className="message-meta">
+                      <span>ユーザー: {message.user}</span>
+                      <span>
+                        時間:{' '}
+                        {new Date(parseInt(message.ts) * 1000).toLocaleString(
+                          'ja-JP',
+                        )}
+                      </span>
+                    </div>
+                    <div className="message-text">{message.text}</div>
+                  </div>
+                ))}
+              </div>
             </div>
-          ) : (
-            <p>ログチャンネルはありません</p>
           )}
+
+          <div className="notification-settings-section">
+            <h2>通知設定</h2>
+            <NotificationSettingForm
+              channels={channels}
+              onSave={saveNotificationSetting}
+            />
+          </div>
         </>
       )}
     </div>

@@ -1,0 +1,96 @@
+@import '../../../styles/index.scss';
+
+.pr-card {
+  border: 1px solid $border-color;
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+  background-color: $white;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: $spacing-sm;
+
+    a {
+      color: $primary-color;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .pr-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: $spacing-md;
+    font-size: 1$spacing-xs;
+    color: $secondary-text-color;
+  }
+
+  .pr-reviewers {
+    margin-bottom: $spacing-md;
+
+    h4 {
+      margin-top: 0;
+      margin-bottom: $spacing-sm;
+      font-size: $spacing-md;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+  }
+
+  .pr-actions {
+    margin-bottom: $spacing-md;
+
+    button {
+      background-color: $success-color;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: $border-radius-md;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $success-hover-color;
+      }
+    }
+  }
+
+  .pr-review-request {
+    border-top: 1px solid $border-color;
+    padding-top: $spacing-md;
+
+    h4 {
+      margin-top: 0;
+      margin-bottom: $spacing-sm;
+      font-size: $spacing-md;
+    }
+
+    input {
+      width: 100%;
+      padding: $spacing-sm;
+      border: 1px solid $border-color;
+      border-radius: $border-radius-md;
+      margin-bottom: $spacing-sm;
+    }
+
+    button {
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: $border-radius-md;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $primary-hover-color;
+      }
+    }
+  }
+}

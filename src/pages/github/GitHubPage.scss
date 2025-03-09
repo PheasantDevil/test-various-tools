@@ -1,0 +1,83 @@
+@import '../../styles/index.scss';
+
+.github-page {
+  .filter-controls {
+    display: flex;
+    margin-bottom: $spacing-md;
+
+    .filter-group {
+      margin-right: $spacing-md;
+
+      label {
+        margin-right: $spacing-sm;
+        font-weight: bold;
+      }
+
+      select {
+        padding: 6px;
+        border: 1px solid $border-color;
+        border-radius: $border-radius-md;
+        background-color: $background-color;
+      }
+    }
+  }
+
+  .tabs {
+    display: flex;
+    margin-bottom: $spacing-md;
+    border-bottom: 1px solid $border-color;
+
+    button {
+      padding: $spacing-sm $spacing-md;
+      background-color: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      font-weight: bold;
+      color: $secondary-text-color;
+
+      &:hover {
+        color: $primary-color;
+      }
+
+      &.active {
+        color: $primary-color;
+        border-bottom-color: $primary-color;
+      }
+    }
+  }
+
+  .recent-repos {
+    margin-bottom: $spacing-md;
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: $spacing-sm;
+      font-size: $spacing-md;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: inline-block;
+        margin-right: $spacing-sm;
+        margin-bottom: $spacing-sm;
+
+        button {
+          background-color: $background-color;
+          border: 1px solid $border-color;
+          border-radius: $border-radius-md;
+          padding: $spacing-xs $spacing-sm;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #f0f3f6;
+          }
+        }
+      }
+    }
+  }
+}

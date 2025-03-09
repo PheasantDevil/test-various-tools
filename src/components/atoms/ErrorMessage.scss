@@ -1,0 +1,29 @@
+@import '../../styles/index.scss';
+
+.error-message {
+  background-color: #ffebee;
+  color: $danger-color;
+  padding: 15px;
+  border-radius: $spacing-xs;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    margin: 0;
+  }
+
+  button {
+    background-color: $danger-color;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: $spacing-xs;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $danger-hover-color;
+    }
+  }
+}

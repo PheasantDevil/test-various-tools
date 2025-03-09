@@ -1,0 +1,66 @@
+@import '../../../styles/index.scss';
+
+.channel-card {
+  border: 1px solid $border-color;
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+  background-color: $white;
+  cursor: pointer;
+  transition: box-shadow $transition-fast;
+
+  &:hover {
+    box-shadow: 0 2px $spacing-sm rgba(0, 0, 0, 0.1);
+  }
+
+  &.selected {
+    border-color: #1264a3;
+    box-shadow: 0 0 0 1px #1264a3;
+  }
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: $spacing-sm;
+    color: #1264a3;
+  }
+
+  .channel-meta {
+    margin-bottom: $spacing-md;
+    font-size: 1$spacing-xs;
+    color: $secondary-text-color;
+
+    p {
+      margin: $spacing-xs 0;
+    }
+  }
+
+  .latest-message {
+    margin-bottom: $spacing-md;
+
+    h4 {
+      margin-top: 0;
+      margin-bottom: $spacing-sm;
+      font-size: $spacing-md;
+    }
+
+    p {
+      background-color: $background-color;
+      padding: $spacing-sm;
+      border-radius: $spacing-xs;
+      margin: 0;
+    }
+  }
+
+  .github-permissions {
+    h4 {
+      margin-top: 0;
+      margin-bottom: $spacing-sm;
+      font-size: $spacing-md;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+  }
+}

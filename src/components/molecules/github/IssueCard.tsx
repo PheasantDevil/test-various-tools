@@ -1,6 +1,7 @@
-import React from 'react';
-import { Issue } from '../../../services/github/issueService';
+import React, { memo } from 'react';
+import { Issue } from 'services/issueService';
 import { formatDate } from '../../../utils/dateUtils';
+import './IssueCard.scss';
 
 interface IssueCardProps {
   issue: Issue;
@@ -12,7 +13,12 @@ const IssueCard: React.FC<IssueCardProps> = ({ issue, onClose, onReopen }) => {
   return (
     <div className="issue-card">
       <h3>
-        <a href={issue.html_url} target="_blank" rel="noopener noreferrer">
+        <a
+          href={issue.html_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Issue #${issue.number}: ${issue.title}. 新しいタブで開きます。`}
+        >
           #{issue.number} {issue.title}
         </a>
       </h3>
@@ -25,7 +31,13 @@ const IssueCard: React.FC<IssueCardProps> = ({ issue, onClose, onReopen }) => {
       </div>
       <div className="issue-actions">
         {issue.state === 'open' ? (
-          <button onClick={() => onClose(issue.number)}>Close Issue</button>
+          <button
+            onClick={() => onClose(issue.number)}
+            tabIndex={0}
+            aria-label={`Issue #${issue.number} を閉じる`}
+          >
+            Close Issue
+          </button>
         ) : (
           <button onClick={() => onReopen(issue.number)}>Reopen Issue</button>
         )}
@@ -34,4 +46,4 @@ const IssueCard: React.FC<IssueCardProps> = ({ issue, onClose, onReopen }) => {
   );
 };
 
-export default IssueCard;
+export default memo(IssueCard);
