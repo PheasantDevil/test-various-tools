@@ -66,28 +66,39 @@ const GitHubPage: React.FC = () => {
     <div className="github-page">
       <h1>GitHub 管理</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} aria-labelledby="repo-form-title">
+        <h2 id="repo-form-title">リポジトリ設定</h2>
         <div className="form-group">
-          <label htmlFor="owner">オーナー:</label>
+          <label htmlFor="owner" id="owner-label">
+            オーナー:
+          </label>
           <input
             id="owner"
             type="text"
             value={ownerInput}
             onChange={e => setOwnerInput(e.target.value)}
+            aria-labelledby="owner-label"
+            aria-required="true"
             required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="repo">リポジトリ:</label>
+          <label htmlFor="repo" id="repo-label">
+            リポジトリ:
+          </label>
           <input
             id="repo"
             type="text"
             value={repoInput}
             onChange={e => setRepoInput(e.target.value)}
+            aria-labelledby="repo-label"
+            aria-required="true"
             required
           />
         </div>
-        <button type="submit">リポジトリを設定</button>
+        <button type="submit" aria-label="リポジトリを設定">
+          リポジトリを設定
+        </button>
       </form>
 
       {/* 最近使用したリポジトリ */}
@@ -129,14 +140,22 @@ const GitHubPage: React.FC = () => {
         owner &&
         repo && (
           <>
-            <div className="tabs">
+            <div className="tabs" role="tablist" aria-label="GitHub 情報タブ">
               <button
+                role="tab"
+                aria-selected={activeTab === 'issues'}
+                aria-controls="issues-panel"
+                id="issues-tab"
                 className={activeTab === 'issues' ? 'active' : ''}
                 onClick={() => setActiveTab('issues')}
               >
                 Issues
               </button>
               <button
+                role="tab"
+                aria-selected={activeTab === 'prs'}
+                aria-controls="prs-panel"
+                id="prs-tab"
                 className={activeTab === 'prs' ? 'active' : ''}
                 onClick={() => setActiveTab('prs')}
               >
@@ -145,7 +164,12 @@ const GitHubPage: React.FC = () => {
             </div>
 
             {activeTab === 'issues' && (
-              <>
+              <div
+                id="issues-panel"
+                role="tabpanel"
+                aria-labelledby="issues-tab"
+                tabIndex={0}
+              >
                 <div className="filter-controls">
                   <div className="filter-group">
                     <label htmlFor="issue-filter">フィルター:</label>
@@ -180,11 +204,16 @@ const GitHubPage: React.FC = () => {
                     <p>Issueはありません</p>
                   )}
                 </div>
-              </>
+              </div>
             )}
 
             {activeTab === 'prs' && (
-              <>
+              <div
+                id="prs-panel"
+                role="tabpanel"
+                aria-labelledby="prs-tab"
+                tabIndex={0}
+              >
                 <div className="filter-controls">
                   <div className="filter-group">
                     <label htmlFor="pr-filter">フィルター:</label>
@@ -217,7 +246,7 @@ const GitHubPage: React.FC = () => {
                     <p>Pull Requestはありません</p>
                   )}
                 </div>
-              </>
+              </div>
             )}
           </>
         )
