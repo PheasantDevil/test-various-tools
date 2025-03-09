@@ -1,57 +1,59 @@
+@import '../../styles/index.scss';
+
 .github-page {
   .filter-controls {
     display: flex;
-    margin-bottom: 16px;
+    margin-bottom: $spacing-md;
 
     .filter-group {
-      margin-right: 16px;
+      margin-right: $spacing-md;
 
       label {
-        margin-right: 8px;
+        margin-right: $spacing-sm;
         font-weight: bold;
       }
 
       select {
         padding: 6px;
-        border: 1px solid #e1e4e8;
-        border-radius: 6px;
-        background-color: #f6f8fa;
+        border: 1px solid $border-color;
+        border-radius: $border-radius-md;
+        background-color: $background-color;
       }
     }
   }
 
   .tabs {
     display: flex;
-    margin-bottom: 16px;
-    border-bottom: 1px solid #e1e4e8;
+    margin-bottom: $spacing-md;
+    border-bottom: 1px solid $border-color;
 
     button {
-      padding: 8px 16px;
+      padding: $spacing-sm $spacing-md;
       background-color: transparent;
       border: none;
       border-bottom: 2px solid transparent;
       cursor: pointer;
       font-weight: bold;
-      color: #586069;
+      color: $secondary-text-color;
 
       &:hover {
-        color: #0366d6;
+        color: $primary-color;
       }
 
       &.active {
-        color: #0366d6;
-        border-bottom-color: #0366d6;
+        color: $primary-color;
+        border-bottom-color: $primary-color;
       }
     }
   }
 
   .recent-repos {
-    margin-bottom: 16px;
+    margin-bottom: $spacing-md;
 
     h3 {
       margin-top: 0;
-      margin-bottom: 8px;
-      font-size: 16px;
+      margin-bottom: $spacing-sm;
+      font-size: $spacing-md;
     }
 
     ul {
@@ -61,14 +63,14 @@
 
       li {
         display: inline-block;
-        margin-right: 8px;
-        margin-bottom: 8px;
+        margin-right: $spacing-sm;
+        margin-bottom: $spacing-sm;
 
         button {
-          background-color: #f6f8fa;
-          border: 1px solid #e1e4e8;
-          border-radius: 6px;
-          padding: 4px 8px;
+          background-color: $background-color;
+          border: 1px solid $border-color;
+          border-radius: $border-radius-md;
+          padding: $spacing-xs $spacing-sm;
           cursor: pointer;
 
           &:hover {

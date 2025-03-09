@@ -1,28 +1,30 @@
+@import '../../styles/index.scss';
+
 .slack-page {
   h1 {
     margin-bottom: 20px;
   }
 
   .channels-section {
-    margin-bottom: 32px;
+    margin-bottom: $spacing-xl;
   }
 
   .channel-history {
-    margin-top: 24px;
+    margin-top: 2$spacing-xs;
 
     h3 {
       margin-top: 0;
-      margin-bottom: 16px;
+      margin-bottom: $spacing-md;
     }
 
     .message-list {
-      border: 1px solid #e1e4e8;
-      border-radius: 6px;
+      border: 1px solid $border-color;
+      border-radius: $border-radius-md;
       overflow: hidden;
 
       .message-item {
         padding: 12px;
-        border-bottom: 1px solid #e1e4e8;
+        border-bottom: 1px solid $border-color;
 
         &:last-child {
           border-bottom: none;
@@ -31,9 +33,9 @@
         .message-meta {
           display: flex;
           justify-content: space-between;
-          margin-bottom: 8px;
-          font-size: 14px;
-          color: #586069;
+          margin-bottom: $spacing-sm;
+          font-size: 1$spacing-xs;
+          color: $secondary-text-color;
         }
 
         .message-text {
@@ -44,11 +46,11 @@
   }
 
   .notification-settings-section {
-    margin-top: 32px;
+    margin-top: $spacing-xl;
 
     h2 {
       margin-top: 0;
-      margin-bottom: 16px;
+      margin-bottom: $spacing-md;
     }
   }
 }

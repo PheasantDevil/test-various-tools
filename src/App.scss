@@ -1,14 +1,19 @@
+@import './styles/index.scss';
+
 .App {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: $font-family-base;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: $spacing-lg;
+  color: $text-color;
 }
 
 .app-nav {
-  background-color: #f5f5f5;
-  padding: 10px;
-  margin-bottom: 20px;
+  background-color: $background-color;
+  padding: $spacing-md;
+  margin-bottom: $spacing-lg;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-sm;
 
   ul {
     display: flex;
@@ -17,15 +22,21 @@
     margin: 0;
 
     li {
-      margin-right: 20px;
+      margin-right: $spacing-lg;
 
       a {
         text-decoration: none;
-        color: #333;
+        color: $text-color;
         font-weight: bold;
+        font-size: $font-size-normal;
+        padding: $spacing-sm 0;
+        border-bottom: $border-width-medium solid transparent;
+        transition: all $transition-fast;
 
-        &:hover {
-          color: #0366d6;
+        &:hover,
+        &.active {
+          color: $primary-color;
+          border-bottom-color: $primary-color;
         }
       }
     }
@@ -34,9 +45,50 @@
 
 .app-content {
   background-color: #fff;
-  border-radius: 4px;
+  border-radius: 6px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  padding: 24px;
+}
+
+// 共通スタイル
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #24292e;
+}
+
+button {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+input,
+select,
+textarea {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+// レスポンシブデザイン
+@media (max-width: 768px) {
+  .App {
+    padding: 16px;
+  }
+
+  .app-nav ul {
+    flex-direction: column;
+
+    li {
+      margin-right: 0;
+      margin-bottom: 12px;
+    }
+  }
+
+  .app-content {
+    padding: 16px;
+  }
 }
 
 // GitHub Page Styles
@@ -69,15 +121,6 @@
 }
 
 @media (max-width: 768px) {
-  .app-nav ul {
-    flex-direction: column;
-
-    li {
-      margin-right: 0;
-      margin-bottom: 10px;
-    }
-  }
-
   .github-page form {
     flex-direction: column;
   }

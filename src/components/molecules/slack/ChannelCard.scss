@@ -1,14 +1,16 @@
+@import '../../../styles/index.scss';
+
 .channel-card {
-  border: 1px solid #e1e4e8;
-  border-radius: 6px;
-  padding: 16px;
-  margin-bottom: 16px;
-  background-color: #fff;
+  border: 1px solid $border-color;
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+  background-color: $white;
   cursor: pointer;
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow $transition-fast;
 
   &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px $spacing-sm rgba(0, 0, 0, 0.1);
   }
 
   &.selected {
@@ -18,33 +20,33 @@
 
   h3 {
     margin-top: 0;
-    margin-bottom: 8px;
+    margin-bottom: $spacing-sm;
     color: #1264a3;
   }
 
   .channel-meta {
-    margin-bottom: 16px;
-    font-size: 14px;
-    color: #586069;
+    margin-bottom: $spacing-md;
+    font-size: 1$spacing-xs;
+    color: $secondary-text-color;
 
     p {
-      margin: 4px 0;
+      margin: $spacing-xs 0;
     }
   }
 
   .latest-message {
-    margin-bottom: 16px;
+    margin-bottom: $spacing-md;
 
     h4 {
       margin-top: 0;
-      margin-bottom: 8px;
-      font-size: 16px;
+      margin-bottom: $spacing-sm;
+      font-size: $spacing-md;
     }
 
     p {
-      background-color: #f6f8fa;
-      padding: 8px;
-      border-radius: 4px;
+      background-color: $background-color;
+      padding: $spacing-sm;
+      border-radius: $spacing-xs;
       margin: 0;
     }
   }
@@ -52,8 +54,8 @@
   .github-permissions {
     h4 {
       margin-top: 0;
-      margin-bottom: 8px;
-      font-size: 16px;
+      margin-bottom: $spacing-sm;
+      font-size: $spacing-md;
     }
 
     ul {

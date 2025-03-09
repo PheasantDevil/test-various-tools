@@ -1,37 +1,39 @@
+@import '../../../styles/index.scss';
+
 .notification-setting-form {
-  border: 1px solid #e1e4e8;
-  border-radius: 6px;
-  padding: 16px;
-  margin-bottom: 16px;
-  background-color: #fff;
+  border: 1px solid $border-color;
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+  background-color: $white;
 
   h3 {
     margin-top: 0;
-    margin-bottom: 16px;
+    margin-bottom: $spacing-md;
   }
 
   .form-group {
-    margin-bottom: 16px;
+    margin-bottom: $spacing-md;
 
     label {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: $spacing-sm;
       font-weight: bold;
     }
 
     select,
     input {
       width: 100%;
-      padding: 8px;
-      border: 1px solid #e1e4e8;
-      border-radius: 6px;
+      padding: $spacing-sm;
+      border: 1px solid $border-color;
+      border-radius: $border-radius-md;
     }
   }
 
   .checkbox-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: $spacing-sm;
 
     label {
       display: flex;
@@ -40,7 +42,7 @@
 
       input {
         width: auto;
-        margin-right: 8px;
+        margin-right: $spacing-sm;
       }
     }
   }
@@ -49,8 +51,8 @@
     background-color: #1264a3;
     color: white;
     border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-md;
     cursor: pointer;
 
     &:hover {

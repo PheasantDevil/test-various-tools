@@ -1,16 +1,18 @@
+@import '../../../styles/index.scss';
+
 .pr-card {
-  border: 1px solid #e1e4e8;
-  border-radius: 6px;
-  padding: 16px;
-  margin-bottom: 16px;
-  background-color: #fff;
+  border: 1px solid $border-color;
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+  background-color: $white;
 
   h3 {
     margin-top: 0;
-    margin-bottom: 8px;
+    margin-bottom: $spacing-sm;
 
     a {
-      color: #0366d6;
+      color: $primary-color;
       text-decoration: none;
 
       &:hover {
@@ -23,18 +25,18 @@
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    margin-bottom: 16px;
-    font-size: 14px;
-    color: #586069;
+    margin-bottom: $spacing-md;
+    font-size: 1$spacing-xs;
+    color: $secondary-text-color;
   }
 
   .pr-reviewers {
-    margin-bottom: 16px;
+    margin-bottom: $spacing-md;
 
     h4 {
       margin-top: 0;
-      margin-bottom: 8px;
-      font-size: 16px;
+      margin-bottom: $spacing-sm;
+      font-size: $spacing-md;
     }
 
     ul {
@@ -44,50 +46,50 @@
   }
 
   .pr-actions {
-    margin-bottom: 16px;
+    margin-bottom: $spacing-md;
 
     button {
-      background-color: #2ea44f;
+      background-color: $success-color;
       color: white;
       border: none;
       padding: 6px 12px;
-      border-radius: 6px;
+      border-radius: $border-radius-md;
       cursor: pointer;
 
       &:hover {
-        background-color: #2c974b;
+        background-color: $success-hover-color;
       }
     }
   }
 
   .pr-review-request {
-    border-top: 1px solid #e1e4e8;
-    padding-top: 16px;
+    border-top: 1px solid $border-color;
+    padding-top: $spacing-md;
 
     h4 {
       margin-top: 0;
-      margin-bottom: 8px;
-      font-size: 16px;
+      margin-bottom: $spacing-sm;
+      font-size: $spacing-md;
     }
 
     input {
       width: 100%;
-      padding: 8px;
-      border: 1px solid #e1e4e8;
-      border-radius: 6px;
-      margin-bottom: 8px;
+      padding: $spacing-sm;
+      border: 1px solid $border-color;
+      border-radius: $border-radius-md;
+      margin-bottom: $spacing-sm;
     }
 
     button {
-      background-color: #0366d6;
+      background-color: $primary-color;
       color: white;
       border: none;
       padding: 6px 12px;
-      border-radius: 6px;
+      border-radius: $border-radius-md;
       cursor: pointer;
 
       &:hover {
-        background-color: #0358c3;
+        background-color: $primary-hover-color;
       }
     }
   }

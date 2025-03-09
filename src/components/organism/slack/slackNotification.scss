@@ -1,9 +1,11 @@
+@import '../../../styles/index.scss';
+
 p {
   display: grid;
 }
 
 label {
-  margin-right: 8px;
+  margin-right: $spacing-sm;
 }
 
 // input {
