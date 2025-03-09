@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { SlackChannel } from 'services/slack/channelService';
 import ChannelCard from '../../components/molecules/slack/ChannelCard';
 import { useSlack } from '../../contexts/SlackContext';
 
@@ -12,11 +13,19 @@ const SlackPage: React.FC = () => {
     error,
     fetchChannels,
     selectChannel,
+    fetchNotificationSettings,
+    fetchChannelHistory,
   } = useSlack();
 
   useEffect(() => {
     fetchChannels();
+    fetchNotificationSettings();
   }, []);
+
+  const handleSelectChannel = async (channel: SlackChannel) => {
+    await selectChannel(channel);
+    await fetchChannelHistory(channel.id, 20);
+  };
 
   return (
     <div className="slack-page">
@@ -42,7 +51,7 @@ const SlackPage: React.FC = () => {
                     selectedChannel?.id === channel.id ? permissions : []
                   }
                   isSelected={selectedChannel?.id === channel.id}
-                  onSelect={selectChannel}
+                  onSelect={handleSelectChannel}
                 />
               ))}
             </div>
