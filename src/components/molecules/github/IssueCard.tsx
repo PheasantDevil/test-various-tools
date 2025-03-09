@@ -1,6 +1,7 @@
 import React from 'react';
 import { Issue } from '../../../services/github/issueService';
 import { formatDate } from '../../../utils/dateUtils';
+import './IssueCard.scss';
 
 interface IssueCardProps {
   issue: Issue;

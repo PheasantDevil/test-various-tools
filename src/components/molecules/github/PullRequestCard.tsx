@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PullRequest } from '../../../services/github/pullRequestService';
 import { formatDate } from '../../../utils/dateUtils';
+import './PullRequestCard.scss';
 
 interface PullRequestCardProps {
   pullRequest: PullRequest;

@@ -1,8 +1,10 @@
 import ErrorMessage from 'components/atoms/ErrorMessage';
+import LoadingSpinner from 'components/atoms/LoadingSpinner';
 import React, { useEffect, useState } from 'react';
 import IssueCard from '../../components/molecules/github/IssueCard';
 import PullRequestCard from '../../components/molecules/github/PullRequestCard';
 import { useGitHub } from '../../contexts/GitHubContext';
+import './GitHubPage.scss';
 
 const GitHubPage: React.FC = () => {
   const {
@@ -19,6 +21,7 @@ const GitHubPage: React.FC = () => {
     handleReopenIssue,
     handleClosePR,
     handleRequestReview,
+    recentRepositories,
   } = useGitHub();
 
   const [ownerInput, setOwnerInput] = useState(owner);
@@ -87,6 +90,28 @@ const GitHubPage: React.FC = () => {
         <button type="submit">リポジトリを設定</button>
       </form>
 
+      {/* 最近使用したリポジトリ */}
+      {recentRepositories.length > 0 && (
+        <div className="recent-repos">
+          <h3>最近使用したリポジトリ</h3>
+          <ul>
+            {recentRepositories.map((repo, index) => (
+              <li key={index}>
+                <button
+                  onClick={() => {
+                    setOwnerInput(repo.owner);
+                    setRepoInput(repo.repo);
+                    setOwnerRepo(repo.owner, repo.repo);
+                  }}
+                >
+                  {repo.owner}/{repo.repo}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {error && (
         <ErrorMessage
           message={error}
@@ -99,7 +124,7 @@ const GitHubPage: React.FC = () => {
         />
       )}
       {loading ? (
-        <div className="loading">読み込み中...</div>
+        <LoadingSpinner />
       ) : (
         owner &&
         repo && (
@@ -120,39 +145,79 @@ const GitHubPage: React.FC = () => {
             </div>
 
             {activeTab === 'issues' && (
-              <div className="issues-list">
-                <h2>Issues</h2>
-                {issues.length > 0 ? (
-                  filteredIssues.map(issue => (
-                    <IssueCard
-                      key={issue.id}
-                      issue={issue}
-                      onClose={handleCloseIssue}
-                      onReopen={handleReopenIssue}
-                    />
-                  ))
-                ) : (
-                  <p>Issueはありません</p>
-                )}
-              </div>
+              <>
+                <div className="filter-controls">
+                  <div className="filter-group">
+                    <label htmlFor="issue-filter">フィルター:</label>
+                    <select
+                      id="issue-filter"
+                      value={issueFilter}
+                      onChange={e =>
+                        setIssueFilter(
+                          e.target.value as 'all' | 'open' | 'closed',
+                        )
+                      }
+                    >
+                      <option value="all">すべて</option>
+                      <option value="open">開いている</option>
+                      <option value="closed">閉じている</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="issues-list">
+                  <h2>Issues</h2>
+                  {filteredIssues.length > 0 ? (
+                    filteredIssues.map(issue => (
+                      <IssueCard
+                        key={issue.id}
+                        issue={issue}
+                        onClose={handleCloseIssue}
+                        onReopen={handleReopenIssue}
+                      />
+                    ))
+                  ) : (
+                    <p>Issueはありません</p>
+                  )}
+                </div>
+              </>
             )}
 
             {activeTab === 'prs' && (
-              <div className="prs-list">
-                <h2>Pull Requests</h2>
-                {pullRequests.length > 0 ? (
-                  filteredPRs.map(pr => (
-                    <PullRequestCard
-                      key={pr.id}
-                      pullRequest={pr}
-                      onClose={handleClosePR}
-                      onRequestReview={handleReviewRequest}
-                    />
-                  ))
-                ) : (
-                  <p>Pull Requestはありません</p>
-                )}
-              </div>
+              <>
+                <div className="filter-controls">
+                  <div className="filter-group">
+                    <label htmlFor="pr-filter">フィルター:</label>
+                    <select
+                      id="pr-filter"
+                      value={prFilter}
+                      onChange={e =>
+                        setPrFilter(e.target.value as 'all' | 'open' | 'closed')
+                      }
+                    >
+                      <option value="all">すべて</option>
+                      <option value="open">開いている</option>
+                      <option value="closed">閉じている</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="prs-list">
+                  <h2>Pull Requests</h2>
+                  {filteredPRs.length > 0 ? (
+                    filteredPRs.map(pr => (
+                      <PullRequestCard
+                        key={pr.id}
+                        pullRequest={pr}
+                        onClose={handleClosePR}
+                        onRequestReview={handleReviewRequest}
+                      />
+                    ))
+                  ) : (
+                    <p>Pull Requestはありません</p>
+                  )}
+                </div>
+              </>
             )}
           </>
         )
