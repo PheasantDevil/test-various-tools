@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { SlackChannel } from 'services/slack/channelService';
+import ErrorMessage from '../../components/atoms/ErrorMessage';
 import ChannelCard from '../../components/molecules/slack/ChannelCard';
 import { useSlack } from '../../contexts/SlackContext';
 
@@ -31,7 +32,17 @@ const SlackPage: React.FC = () => {
     <div className="slack-page">
       <h1>Slack チャンネル管理</h1>
 
-      {error && <div className="error">{error}</div>}
+      {error && (
+        <ErrorMessage
+          message={error}
+          onRetry={() => {
+            fetchChannels();
+            if (selectedChannel) {
+              fetchChannelHistory(selectedChannel.id);
+            }
+          }}
+        />
+      )}
 
       {loading ? (
         <div className="loading">読み込み中...</div>

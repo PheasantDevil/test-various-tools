@@ -1,3 +1,4 @@
+import ErrorMessage from 'components/atoms/ErrorMessage';
 import React, { useEffect, useState } from 'react';
 import IssueCard from '../../components/molecules/github/IssueCard';
 import PullRequestCard from '../../components/molecules/github/PullRequestCard';
@@ -86,8 +87,17 @@ const GitHubPage: React.FC = () => {
         <button type="submit">リポジトリを設定</button>
       </form>
 
-      {error && <div className="error">{error}</div>}
-
+      {error && (
+        <ErrorMessage
+          message={error}
+          onRetry={() => {
+            if (owner && repo) {
+              fetchIssues();
+              fetchPullRequests();
+            }
+          }}
+        />
+      )}
       {loading ? (
         <div className="loading">読み込み中...</div>
       ) : (
