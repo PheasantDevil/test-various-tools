@@ -1,0 +1,42 @@
+// src/styles/variables.scss を作成
+// カラーパレット
+$primary-color: #0366d6;
+$primary-hover-color: #0358c3;
+$success-color: #2ea44f;
+$success-hover-color: #2c974b;
+$danger-color: #c62828;
+$danger-hover-color: #b71c1c;
+$text-color: #24292e;
+$secondary-text-color: #586069;
+$border-color: #e1e4e8;
+$background-color: #f6f8fa;
+$white: #fff;
+
+// フォントサイズ
+$font-size-small: 14px;
+$font-size-normal: 16px;
+$font-size-large: 18px;
+$font-size-xlarge: 24px;
+
+// スペーシング
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// ボーダーラディウス
+$border-radius-sm: 4px;
+$border-radius-md: 6px;
+$border-radius-lg: 8px;
+
+// シャドウ
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+// ブレークポイント
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
