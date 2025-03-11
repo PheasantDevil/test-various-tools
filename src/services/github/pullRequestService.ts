@@ -16,11 +16,11 @@ export interface PullRequest {
     login: string;
     avatar_url: string;
   }[];
-  reviews: {
+  reviews?: {
     user: {
       login: string;
     };
-    state: 'APPROVED' | 'CHANGES_REQUESTED' | 'COMMENTED';
+    state: string;
     submitted_at: string;
   }[];
 }
@@ -29,20 +29,29 @@ export const getPullRequests = async (
   owner: string,
   repo: string,
 ): Promise<PullRequest[]> => {
-  const response = await githubApiClient.get(
-    `/repos/${owner}/${repo}/pulls?state=all`,
-  );
-  const pullRequests = response.data;
-
-  // 各PRのレビュー情報を取得
-  for (const pr of pullRequests) {
-    const reviewsResponse = await githubApiClient.get(
-      `/repos/${owner}/${repo}/pulls/${pr.number}/reviews`,
-    );
-    pr.reviews = reviewsResponse.data;
+  try {
+    const response = await githubApiClient.get(`/repos/${owner}/${repo}/pulls`);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch pull requests:', error);
+    throw error;
   }
+};
 
-  return pullRequests;
+export const getPullRequestReviews = async (
+  owner: string,
+  repo: string,
+  prNumber: number,
+): Promise<any[]> => {
+  try {
+    const response = await githubApiClient.get(
+      `/repos/${owner}/${repo}/pulls/${prNumber}/reviews`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch PR reviews:', error);
+    throw error;
+  }
 };
 
 export const closePullRequest = async (
@@ -50,23 +59,18 @@ export const closePullRequest = async (
   repo: string,
   prNumber: number,
 ): Promise<PullRequest> => {
-  const response = await githubApiClient.patch(
-    `/repos/${owner}/${repo}/pulls/${prNumber}`,
-    {
-      state: 'closed',
-    },
-  );
-  return response.data;
-};
-
-export const reopenPullRequest = async (
-  owner: string,
-  repo: string,
-  prNumber: number,
-): Promise<PullRequest> => {
-  // PRの再オープンはAPIで直接サポートされていないため、新しいPRを作成する必要がある
-  // 実際の実装では、元のPRの情報を取得して新しいPRを作成するロジックが必要
-  throw new Error('Reopen PR functionality not implemented yet');
+  try {
+    const response = await githubApiClient.patch(
+      `/repos/${owner}/${repo}/pulls/${prNumber}`,
+      {
+        state: 'closed',
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Failed to close PR:', error);
+    throw error;
+  }
 };
 
 export const requestReview = async (
@@ -75,11 +79,16 @@ export const requestReview = async (
   prNumber: number,
   reviewers: string[],
 ): Promise<PullRequest> => {
-  const response = await githubApiClient.post(
-    `/repos/${owner}/${repo}/pulls/${prNumber}/requested_reviewers`,
-    {
-      reviewers,
-    },
-  );
-  return response.data;
+  try {
+    const response = await githubApiClient.post(
+      `/repos/${owner}/${repo}/pulls/${prNumber}/requested_reviewers`,
+      {
+        reviewers,
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Failed to request review:', error);
+    throw error;
+  }
 };
