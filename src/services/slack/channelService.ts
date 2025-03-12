@@ -79,7 +79,7 @@ export const getChannelHistory = async (
 };
 
 export const getGithubAppPermissions = async (
-  channelId: string,
+  _channelId: string,
 ): Promise<string[]> => {
   // 実際のAPIがない場合はモックデータを返す
   return [

@@ -10,6 +10,7 @@ import './App.scss';
 import LoadingSpinner from './components/atoms/LoadingSpinner';
 import { GitHubProvider } from './contexts/GitHubContext';
 import { SlackProvider } from './contexts/SlackContext';
+import TokenCheck from './pages/TokenCheck';
 
 // アクティブなリンクを判定するためのコンポーネント
 const NavLink = ({
@@ -40,6 +41,9 @@ const NavBar = () => {
         <li>
           <NavLink to="/slack">Slack 管理</NavLink>
         </li>
+        <li>
+          <NavLink to="/token-check">トークン確認</NavLink>
+        </li>
       </ul>
     </nav>
   );
@@ -62,6 +66,7 @@ function App() {
                 <Routes>
                   <Route path="/" element={<GitHubPage />} />
                   <Route path="/slack" element={<SlackPage />} />
+                  <Route path="/token-check" element={<TokenCheck />} />
                 </Routes>
               </Suspense>
             </main>

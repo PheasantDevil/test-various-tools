@@ -12,7 +12,7 @@ export const getNotificationSettings = (): NotificationSetting[] => {
 };
 
 export const saveNotificationSetting = async (
-  setting: NotificationSetting,
+  _setting: NotificationSetting,
 ): Promise<void> => {
   // 実際の実装では API に保存
 };
