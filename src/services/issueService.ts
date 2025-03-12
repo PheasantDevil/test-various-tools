@@ -1,4 +1,4 @@
-import { githubApiClient } from '../../utils/api';
+import { githubApiClient } from "@/utils/api";
 
 export interface Issue {
   id: number;
