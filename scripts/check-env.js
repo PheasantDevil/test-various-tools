@@ -8,11 +8,7 @@ const rootDir = path.resolve(__dirname, '..');
 const requiredEnvVars = ['REACT_APP_GITHUB_TOKEN', 'REACT_APP_SLACK_TOKEN'];
 
 // 環境ファイルのリスト
-const envFiles = [
-  '.env.local',
-  '.env.development.local',
-  '.env.production.local',
-];
+const envFiles = ['.env.local', '.env.development', '.env.production'];
 
 // 環境ファイルの存在確認と作成
 function checkAndCreateEnvFiles() {
