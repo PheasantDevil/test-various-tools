@@ -33,12 +33,18 @@ const GitHubPage: React.FC = () => {
   const [prFilter, setPrFilter] = useState<'all' | 'open' | 'closed'>('all');
   const [reviewerInput, setReviewerInput] = useState<string>('');
 
+  const memoizedFetchIssues = useCallback(() => {
+    fetchIssues();
+  }, [fetchIssues]);
+
+  const memoizedFetchPullRequests = useCallback(() => {
+    fetchPullRequests();
+  }, [fetchPullRequests]);
+
   useEffect(() => {
-    if (owner && repo) {
-      fetchIssues();
-      fetchPullRequests();
-    }
-  }, [owner, repo]);
+    memoizedFetchIssues();
+    memoizedFetchPullRequests();
+  }, [memoizedFetchIssues, memoizedFetchPullRequests]);
 
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {

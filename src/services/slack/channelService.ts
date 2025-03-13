@@ -53,28 +53,35 @@ export const getLatestMessage = async (
         limit: 1,
       },
     });
-    return response.data.messages.length > 0 ? response.data.messages[0] : null;
+
+    if (response.data?.messages?.[0]) {
+      return response.data.messages[0];
+    }
+    return null;
   } catch (error) {
     console.error('Failed to fetch latest message:', error);
-    throw error;
+    return null;
   }
 };
 
 export const getChannelHistory = async (
   channelId: string,
-  limit = 10,
 ): Promise<SlackMessage[]> => {
   try {
     const response = await slackApiClient.get('/conversations.history', {
       params: {
         channel: channelId,
-        limit,
+        limit: 50,
       },
     });
-    return response.data.messages;
+
+    if (response.data?.messages && Array.isArray(response.data.messages)) {
+      return response.data.messages;
+    }
+    return [];
   } catch (error) {
     console.error('Failed to fetch channel history:', error);
-    throw error;
+    return [];
   }
 };
 

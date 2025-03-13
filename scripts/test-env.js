@@ -35,6 +35,30 @@ if (slackToken && !slackToken.startsWith('xoxb-')) {
   );
 }
 
+// Slack Webhook URL
+const slackWebhookUrl = process.env.REACT_APP_SLACK_WEBHOOK_URL;
+if (slackWebhookUrl) {
+  // セキュリティのため、URLの一部のみを表示
+  const maskedUrl = slackWebhookUrl.replace(
+    /^(https:\/\/hooks\.slack\.com\/services\/[^\/]+\/[^\/]+\/).*$/,
+    '$1****',
+  );
+  console.log(`REACT_APP_SLACK_WEBHOOK_URL: ${maskedUrl} (設定済み)`);
+} else {
+  console.log('REACT_APP_SLACK_WEBHOOK_URL: 未設定');
+}
+
+// Webhook URLの形式チェック
+if (
+  slackWebhookUrl &&
+  !slackWebhookUrl.startsWith('https://hooks.slack.com/services/')
+) {
+  console.warn(
+    '警告: Slack Webhook URLの形式が正しくありません。',
+    'https://hooks.slack.com/services/ で始まる必要があります。',
+  );
+}
+
 // 環境変数ファイルのパーミッションチェック
 const envLocalPath = path.resolve(__dirname, '..', '.env.local');
 if (fs.existsSync(envLocalPath)) {

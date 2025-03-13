@@ -13,8 +13,7 @@ class SlackNotification extends React.Component<{}, State> {
   constructor(props: any) {
     super(props);
     this.state = {
-      webhookUrl:
-        'https://hooks.slack.com/services/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',
+      webhookUrl: `${process.env['REACT_APP_SLACK_WEBHOOK_URL']}`,
       messageIcon: ':sunny:',
       channelName: '#random',
       notificationTitle: 'TEST',

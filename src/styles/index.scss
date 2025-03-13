@@ -1,8 +1,9 @@
-@import './colors.scss';
-@import './typography.scss';
-@import './spacing.scss';
-@import './borders.scss';
-@import './effects.scss';
-@import './breakpoints.scss';
+@forward './variables/borders';
+@forward './variables/breakpoints';
+@forward './variables/colors';
+@forward './variables/effects';
+@forward './variables/spacing';
+@forward './variables/typography';
 
 // 他の共通スタイルがあれば追加
+@forward './mixins';

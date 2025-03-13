@@ -23,7 +23,7 @@ const ChannelCard: React.FC<ChannelCardProps> = ({
   return (
     <div
       className={`channel-card ${isSelected ? 'selected' : ''}`}
-      onClick={() => onSelect(channel)}
+      onClick={() => !isSelected && onSelect(channel)}
     >
       <h3>#{channel.name}</h3>
       <div className="channel-meta">
@@ -36,7 +36,7 @@ const ChannelCard: React.FC<ChannelCardProps> = ({
         <>
           <div className="latest-message">
             <h4>最新メッセージ:</h4>
-            {latestMessage ? (
+            {latestMessage && latestMessage.text ? (
               <p>
                 {latestMessage.text.substring(0, 100)}
                 {latestMessage.text.length > 100 ? '...' : ''}
