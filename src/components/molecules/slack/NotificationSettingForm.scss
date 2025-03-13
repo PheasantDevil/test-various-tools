@@ -7,9 +7,64 @@
   margin-bottom: $spacing-md;
   background-color: $white;
 
-  h3 {
-    margin-top: 0;
+  .form-header {
+    margin-bottom: $spacing-lg;
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: $spacing-md;
+      color: $text-color;
+      font-size: $font-size-lg;
+    }
+  }
+
+  .form-description {
+    background-color: $background-color;
+    padding: $spacing-md;
+    border-radius: $border-radius-md;
     margin-bottom: $spacing-md;
+
+    p {
+      margin: 0 0 $spacing-sm 0;
+      color: $text-color;
+    }
+
+    ol {
+      margin: $spacing-sm 0;
+      padding-left: $spacing-lg;
+
+      li {
+        margin-bottom: $spacing-xs;
+        color: $text-color;
+      }
+    }
+
+    .notification-examples {
+      margin-top: $spacing-md;
+      padding-top: $spacing-md;
+      border-top: 1px solid $border-color;
+
+      h4 {
+        margin: 0 0 $spacing-sm 0;
+        color: $text-color;
+        font-size: $font-size-base;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: $spacing-lg;
+
+        li {
+          margin-bottom: $spacing-xs;
+          color: $secondary-text-color;
+          font-size: $font-size-sm;
+
+          strong {
+            color: $text-color;
+          }
+        }
+      }
+    }
   }
 
   .form-group {
@@ -18,7 +73,16 @@
     label {
       display: block;
       margin-bottom: $spacing-sm;
-      font-weight: bold;
+
+      .label-text {
+        font-weight: bold;
+        color: $text-color;
+      }
+
+      .required-mark {
+        color: $danger-color;
+        margin-left: $spacing-xs;
+      }
     }
 
     select,
@@ -26,7 +90,15 @@
       width: 100%;
       padding: $spacing-sm;
       border: 1px solid $border-color;
-      border-radius: $border-radius-md;
+      border-radius: $border-radius-sm;
+      background-color: $white;
+      font-size: $font-size-base;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
+      }
     }
   }
 
@@ -34,29 +106,74 @@
     display: flex;
     flex-direction: column;
     gap: $spacing-sm;
+    padding: $spacing-sm;
+    background-color: $white;
+    border: 1px solid $border-color;
+    border-radius: $border-radius-sm;
 
-    label {
+    .checkbox-label {
       display: flex;
       align-items: center;
-      font-weight: normal;
+      cursor: pointer;
 
-      input {
+      input[type='checkbox'] {
         width: auto;
         margin-right: $spacing-sm;
+      }
+
+      .checkbox-text {
+        color: $text-color;
+      }
+
+      &:hover {
+        .checkbox-text {
+          color: $primary-color;
+        }
       }
     }
   }
 
-  button {
-    background-color: #1264a3;
-    color: white;
-    border: none;
-    padding: $spacing-sm $spacing-md;
-    border-radius: $border-radius-md;
-    cursor: pointer;
+  .form-section {
+    margin-top: $spacing-lg;
+    padding-top: $spacing-md;
+    border-top: 1px solid $border-color;
 
-    &:hover {
-      background-color: #0f5b96;
+    h4 {
+      margin: 0 0 $spacing-md 0;
+      color: $text-color;
+      font-size: $font-size-base;
+    }
+  }
+
+  button {
+    background-color: $primary-color;
+    color: $white;
+    border: none;
+    padding: $spacing-sm $spacing-lg;
+    border-radius: $border-radius-sm;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    margin-top: $spacing-md;
+
+    &:hover:not(:disabled) {
+      background-color: darken($primary-color, 10%);
+    }
+
+    &:disabled {
+      background-color: $border-color;
+      cursor: not-allowed;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .notification-setting-form {
+    padding: $spacing-sm;
+
+    .form-description {
+      padding: $spacing-sm;
     }
   }
 }

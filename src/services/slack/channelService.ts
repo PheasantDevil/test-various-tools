@@ -23,6 +23,11 @@ export interface SlackMessage {
   type: string;
 }
 
+export interface CreateChannelParams {
+  repositoryName: string;
+  description?: string;
+}
+
 export const getChannels = async (): Promise<SlackChannel[]> => {
   try {
     const response = await slackApiClient.get('/conversations.list');
@@ -96,4 +101,28 @@ export const getGithubAppPermissions = async (
     'pull_requests:write',
     'workflows:read',
   ];
+};
+
+export const createLogChannel = async (
+  params: CreateChannelParams,
+): Promise<SlackChannel> => {
+  const channelName = `log_gh_${params.repositoryName.toLowerCase()}`;
+  try {
+    const response = await slackApiClient.post('/conversations.create', {
+      name: channelName,
+      is_private: false,
+    });
+
+    if (params.description) {
+      await slackApiClient.post('/conversations.setPurpose', {
+        channel: response.data.channel.id,
+        purpose: params.description,
+      });
+    }
+
+    return response.data.channel;
+  } catch (error) {
+    console.error('Failed to create channel:', error);
+    throw error;
+  }
 };

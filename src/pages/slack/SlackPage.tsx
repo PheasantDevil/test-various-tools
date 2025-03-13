@@ -3,6 +3,7 @@ import { SlackChannel } from 'services/slack/channelService';
 import ErrorMessage from '../../components/atoms/ErrorMessage';
 import LoadingSpinner from '../../components/atoms/LoadingSpinner';
 import ChannelCard from '../../components/molecules/slack/ChannelCard';
+import CreateChannelForm from '../../components/molecules/slack/CreateChannelForm';
 import NotificationSettingForm from '../../components/molecules/slack/NotificationSettingForm';
 import { useSlack } from '../../contexts/SlackContext';
 import './SlackPage.scss';
@@ -15,20 +16,26 @@ const SlackPage: React.FC = () => {
     permissions,
     loading,
     error,
+    repositories,
     fetchChannels,
     selectChannel,
     fetchNotificationSettings,
     fetchChannelHistory,
     channelHistory,
     saveNotificationSetting,
+    fetchRepositories,
+    createChannel,
   } = useSlack();
 
   // 初回マウント時のみ実行するように修正
   useEffect(() => {
     // 初期データの取得
     const initializeData = async () => {
-      await fetchChannels();
-      await fetchNotificationSettings();
+      await Promise.all([
+        fetchChannels(),
+        fetchNotificationSettings(),
+        fetchRepositories(),
+      ]);
     };
 
     initializeData();
@@ -56,6 +63,14 @@ const SlackPage: React.FC = () => {
         <LoadingSpinner />
       ) : (
         <>
+          <div className="create-channel-section">
+            <CreateChannelForm
+              repositories={repositories}
+              onSubmit={createChannel}
+              isLoading={loading}
+            />
+          </div>
+
           <div className="channels-section">
             <h2>ログチャンネル一覧</h2>
             {channels.length > 0 ? (
