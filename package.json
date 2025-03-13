@@ -24,7 +24,8 @@
     "preDeploy": "npm run rm && npm run build && npm run mv",
     "deploy": "npm run rm && npm run build && npm run mv && npm run git",
     "eject": "react-scripts eject",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "update-sass": "node scripts/update-sass-imports.js"
   },
   "devDependencies": {
     "@babel/core": "7.26.9",

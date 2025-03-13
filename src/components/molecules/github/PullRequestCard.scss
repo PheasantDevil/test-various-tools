@@ -1,4 +1,4 @@
-@import '../../../styles/index.scss';
+@use '../../../styles/index.scss' as *;
 
 .pr-card {
   border: 1px solid $border-color;
@@ -26,7 +26,7 @@
     flex-wrap: wrap;
     gap: 12px;
     margin-bottom: $spacing-md;
-    font-size: 1$spacing-xs;
+    font-size: $spacing-xs;
     color: $secondary-text-color;
   }
 

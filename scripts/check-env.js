@@ -5,10 +5,10 @@ const path = require('path');
 const rootDir = path.resolve(__dirname, '..');
 
 // 必要な環境変数のリスト
-const requiredEnvVars = ['REACT_APP_GITHUB_TOKEN', 'REACT_APP_SLACK_TOKEN'];
+const requiredEnvVars = ['REACT_APP_GITHUB_TOKEN', 'REACT_APP_SLACK_TOKEN', 'REACT_APP_SLACK_WEBHOOK_URL'];
 
 // 環境ファイルのリスト
-const envFiles = ['.env.local', '.env.development', '.env.production'];
+const envFiles = ['.env', '.env.local', '.env.development', '.env.production'];
 
 // 環境ファイルの存在確認と作成
 function checkAndCreateEnvFiles() {

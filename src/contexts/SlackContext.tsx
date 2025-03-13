@@ -46,14 +46,22 @@ export const SlackProvider: React.FC<{ children: ReactNode }> = ({
   const [notificationSettings, setNotificationSettings] = useState<
     NotificationSetting[]
   >([]);
+  const [lastFetchTime, setLastFetchTime] = useState<number>(0);
+  const CACHE_DURATION = 60000; // 1分
 
   const fetchChannels = async () => {
+    // 前回のフェッチから1分以内の場合はスキップ
+    if (Date.now() - lastFetchTime < CACHE_DURATION) {
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
     try {
       const data = await getLogChannels();
       setChannels(data);
+      setLastFetchTime(Date.now());
     } catch (err) {
       setError('Failed to fetch channels');
       console.error(err);
@@ -81,16 +89,20 @@ export const SlackProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
-  const fetchChannelHistory = async (channelId: string, limit: number = 10) => {
+  const fetchChannelHistory = async (channelId: string) => {
     setLoading(true);
-    setError(null);
-
     try {
-      const messages = await getChannelHistory(channelId, limit);
-      setChannelHistory(messages);
+      const messages = await getChannelHistory(channelId);
+      if (Array.isArray(messages)) {
+        setChannelHistory(messages);
+      } else {
+        setChannelHistory([]);
+        setError('メッセージの取得に失敗しました');
+      }
     } catch (err) {
-      setError('Failed to fetch channel history');
-      console.error(err);
+      console.error('Failed to fetch channel history:', err);
+      setError('メッセージの取得中にエラーが発生しました');
+      setChannelHistory([]);
     } finally {
       setLoading(false);
     }

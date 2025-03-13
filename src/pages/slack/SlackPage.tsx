@@ -23,31 +23,34 @@ const SlackPage: React.FC = () => {
     saveNotificationSetting,
   } = useSlack();
 
+  // 初回マウント時のみ実行するように修正
   useEffect(() => {
-    fetchChannels();
-    fetchNotificationSettings();
-  }, []);
+    // 初期データの取得
+    const initializeData = async () => {
+      await fetchChannels();
+      await fetchNotificationSettings();
+    };
+
+    initializeData();
+  }, []); // 依存配列を空にして初回のみ実行
 
   const handleSelectChannel = async (channel: SlackChannel) => {
     await selectChannel(channel);
     await fetchChannelHistory(channel.id, 20);
   };
 
+  const handleRetry = async () => {
+    await fetchChannels();
+    if (selectedChannel) {
+      await fetchChannelHistory(selectedChannel.id);
+    }
+  };
+
   return (
     <div className="slack-page">
       <h1>Slack チャンネル管理</h1>
 
-      {error && (
-        <ErrorMessage
-          message={error}
-          onRetry={() => {
-            fetchChannels();
-            if (selectedChannel) {
-              fetchChannelHistory(selectedChannel.id);
-            }
-          }}
-        />
-      )}
+      {error && <ErrorMessage message={error} onRetry={handleRetry} />}
 
       {loading ? (
         <LoadingSpinner />
@@ -77,24 +80,35 @@ const SlackPage: React.FC = () => {
             )}
           </div>
 
-          {selectedChannel && channelHistory.length > 0 && (
+          {selectedChannel && (
             <div className="channel-history">
               <h3>#{selectedChannel.name} のメッセージ履歴</h3>
               <div className="message-list">
-                {channelHistory.map(message => (
-                  <div key={message.ts} className="message-item">
-                    <div className="message-meta">
-                      <span>ユーザー: {message.user}</span>
-                      <span>
-                        時間:{' '}
-                        {new Date(parseInt(message.ts) * 1000).toLocaleString(
-                          'ja-JP',
-                        )}
-                      </span>
+                {loading ? (
+                  <LoadingSpinner />
+                ) : error ? (
+                  <ErrorMessage message={error} />
+                ) : Array.isArray(channelHistory) &&
+                  channelHistory.length > 0 ? (
+                  channelHistory.map(message => (
+                    <div key={message.ts} className="message-item">
+                      <div className="message-meta">
+                        <span>ユーザー: {message.user}</span>
+                        <span>
+                          時間:{' '}
+                          {new Date(parseInt(message.ts) * 1000).toLocaleString(
+                            'ja-JP',
+                          )}
+                        </span>
+                      </div>
+                      <div className="message-text">{message.text}</div>
                     </div>
-                    <div className="message-text">{message.text}</div>
+                  ))
+                ) : (
+                  <div className="no-messages">
+                    <p>このチャンネルにはメッセージがありません。</p>
                   </div>
-                ))}
+                )}
               </div>
             </div>
           )}

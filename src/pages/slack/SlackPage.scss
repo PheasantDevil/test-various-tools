@@ -1,4 +1,4 @@
-@import '../../styles/index.scss';
+@use '../../styles/index.scss' as *;
 
 .slack-page {
   h1 {
@@ -53,4 +53,12 @@
       margin-bottom: $spacing-md;
     }
   }
+}
+
+.no-messages {
+  padding: $spacing-md;
+  background-color: $background-color;
+  border-radius: $border-radius-md;
+  text-align: center;
+  color: $secondary-text-color;
 }

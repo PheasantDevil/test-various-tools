@@ -11,6 +11,7 @@
 ### Slack API設定
 
 - `REACT_APP_SLACK_TOKEN`: Slack APIにアクセスするためのBot User OAuth Token
+- `REACT_APP_SLACK_WEBHOOK_URL`: Slack Incoming Webhook URL
 
 ## 環境ファイルの種類
 
@@ -67,6 +68,7 @@
 ```
 REACT_APP_GITHUB_TOKEN=your_github_token_here
 REACT_APP_SLACK_TOKEN=xoxb-your_slack_token_here
+REACT_APP_SLACK_WEBHOOK_URL=https://hooks.slack.com/services/your-webhook-url-here
 ```
 
 ## 自動環境ファイル作成機能
@@ -80,3 +82,18 @@ REACT_APP_SLACK_TOKEN=xoxb-your_slack_token_here
 3. **定期的にトークンをローテーションする**: セキュリティのため、定期的にトークンを再生成します
 4. **最小権限の原則を適用する**: トークンには必要最小限のスコープ（権限）のみを付与します
 5. **本番環境ではシークレット管理サービスを使用する**: AWS Secrets Manager、Google Secret Manager、HashiCorp Vaultなどのサービスを検討します
+
+## Slack Webhook URLの取得方法
+
+1. [Slack API: Incoming Webhooks](https://slack.com/apps/A0F7XDUAZ-incoming-webhooks)にアクセス
+2. "Add to Slack"をクリック
+3. 投稿先のチャンネルを選択
+4. "Add Incoming WebHooks integration"をクリック
+5. 生成されたWebhook URLをコピー
+6. `.env.local`ファイルに`REACT_APP_SLACK_WEBHOOK_URL`として設定
+
+## セキュリティに関する注意
+
+- 環境変数ファイル（`.env.local`など）は決してGitリポジトリにコミットしないでください
+- Webhook URLは機密情報として扱い、漏洩しないよう注意してください
+- URLが漏洩した場合は、直ちに再生成してください
