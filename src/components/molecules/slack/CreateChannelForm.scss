@@ -1,58 +1,61 @@
-@use '../../../styles/index.scss' as *;
+@use '../../../styles/variables/typography' as *;
+@use '../../../styles/variables/colors' as *;
+@use '../../../styles/variables/spacing' as *;
+@use '../../../styles/variables/borders' as *;
 
 .create-channel-form {
-  border: 1px solid $border-color;
-  border-radius: $border-radius-md;
-  padding: $spacing-md;
-  margin-bottom: $spacing-md;
-  background-color: $white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  background-color: white;
 
   h3 {
     margin-top: 0;
-    margin-bottom: $spacing-md;
-    color: $text-color;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-color);
   }
 
   .form-description {
-    background-color: $background-color;
-    padding: $spacing-sm;
-    border-radius: $border-radius-sm;
-    margin-bottom: $spacing-md;
+    background-color: var(--background-color);
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: var(--spacing-md);
 
     p {
       margin: 0;
-      color: $secondary-text-color;
-      font-size: $font-size-sm;
+      color: var(--secondary-text-color);
+      font-size: var(--font-size-sm);
     }
   }
 
   .form-group {
-    margin-bottom: $spacing-md;
+    margin-bottom: var(--spacing-md);
 
     label {
       display: block;
-      margin-bottom: $spacing-sm;
+      margin-bottom: var(--spacing-sm);
       font-weight: bold;
-      color: $text-color;
+      color: var(--text-color);
     }
 
     select,
     textarea {
       width: 100%;
-      padding: $spacing-sm;
-      border: 1px solid $border-color;
-      border-radius: $border-radius-sm;
-      background-color: $white;
-      font-size: $font-size-base;
+      padding: var(--spacing-sm);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      background-color: white;
+      font-size: var(--font-size-base);
 
       &:focus {
         outline: none;
-        border-color: $primary-color;
-        box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.1);
       }
 
       &:disabled {
-        background-color: $background-color;
+        background-color: var(--background-color);
         cursor: not-allowed;
       }
     }
@@ -64,21 +67,21 @@
   }
 
   button {
-    background-color: $primary-color;
-    color: $white;
+    background-color: var(--primary-color);
+    color: white;
     border: none;
-    padding: $spacing-sm $spacing-md;
-    border-radius: $border-radius-sm;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-sm);
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.2s ease;
 
     &:hover:not(:disabled) {
-      background-color: darken($primary-color, 10%);
+      filter: brightness(0.9);
     }
 
     &:disabled {
-      background-color: $border-color;
+      background-color: var(--border-color);
       cursor: not-allowed;
     }
   }

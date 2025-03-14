@@ -25,7 +25,7 @@ export interface SlackMessage {
 
 export interface CreateChannelParams {
   repositoryName: string;
-  description?: string;
+  description?: string | undefined;
 }
 
 export const getChannels = async (): Promise<SlackChannel[]> => {

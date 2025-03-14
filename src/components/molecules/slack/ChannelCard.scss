@@ -1,52 +1,73 @@
-@use '../../../styles/index.scss' as *;
+@use '@/styles/index.scss' as *;
 
 .channel-card {
-  border: 1px solid $border-color;
-  border-radius: $border-radius-md;
-  padding: $spacing-md;
-  margin-bottom: $spacing-md;
-  background-color: $white;
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-md);
+  background-color: var(--white);
   cursor: pointer;
-  transition: box-shadow $transition-fast;
+  transition: all var(--transition-fast);
 
   &:hover {
-    box-shadow: 0 2px $spacing-sm rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
   }
 
   &.selected {
-    border-color: #1264a3;
-    box-shadow: 0 0 0 1px #1264a3;
+    border-color: var(--primary-color);
+    background-color: rgba(var(--primary-color-rgb), 0.05);
+  }
+
+  .channel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+
+    .channel-name {
+      font-weight: var(--font-weight-bold);
+      color: var(--text-color);
+    }
+
+    .channel-meta {
+      font-size: var(--font-size-sm);
+      color: var(--secondary-text-color);
+    }
+  }
+
+  .channel-description {
+    color: var(--secondary-text-color);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .channel-stats {
+    display: flex;
+    gap: var(--spacing-md);
+    font-size: var(--font-size-sm);
+    color: var(--secondary-text-color);
   }
 
   h3 {
     margin-top: 0;
-    margin-bottom: $spacing-sm;
-    color: #1264a3;
-  }
-
-  .channel-meta {
-    margin-bottom: $spacing-md;
-    font-size: 1$spacing-xs;
-    color: $secondary-text-color;
-
-    p {
-      margin: $spacing-xs 0;
-    }
+    margin-bottom: var(--spacing-sm);
+    color: var(--primary-color);
   }
 
   .latest-message {
-    margin-bottom: $spacing-md;
+    margin-bottom: var(--spacing-md);
 
     h4 {
       margin-top: 0;
-      margin-bottom: $spacing-sm;
-      font-size: $spacing-md;
+      margin-bottom: var(--spacing-sm);
+      font-size: var(--font-size-base);
     }
 
     p {
-      background-color: $background-color;
-      padding: $spacing-sm;
-      border-radius: $spacing-xs;
+      background-color: var(--background-color);
+      padding: var(--spacing-sm);
+      border-radius: var(--border-radius-sm);
       margin: 0;
     }
   }
@@ -54,13 +75,13 @@
   .github-permissions {
     h4 {
       margin-top: 0;
-      margin-bottom: $spacing-sm;
-      font-size: $spacing-md;
+      margin-bottom: var(--spacing-sm);
+      font-size: var(--font-size-base);
     }
 
     ul {
       margin: 0;
-      padding-left: 20px;
+      padding-left: var(--spacing-lg);
     }
   }
 }

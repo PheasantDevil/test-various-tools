@@ -1,66 +1,69 @@
-@use '../../../styles/index.scss' as *;
+@use '../../../styles/variables/typography' as *;
+@use '../../../styles/variables/colors' as *;
+@use '../../../styles/variables/spacing' as *;
+@use '../../../styles/variables/borders' as *;
 
 .notification-setting-form {
-  border: 1px solid $border-color;
-  border-radius: $border-radius-md;
-  padding: $spacing-md;
-  margin-bottom: $spacing-md;
-  background-color: $white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  background-color: white;
 
   .form-header {
-    margin-bottom: $spacing-lg;
+    margin-bottom: var(--spacing-lg);
 
     h3 {
       margin-top: 0;
-      margin-bottom: $spacing-md;
-      color: $text-color;
-      font-size: $font-size-lg;
+      margin-bottom: var(--spacing-md);
+      color: var(--text-color);
+      font-size: var(--font-size-lg);
     }
   }
 
   .form-description {
-    background-color: $background-color;
-    padding: $spacing-md;
-    border-radius: $border-radius-md;
-    margin-bottom: $spacing-md;
+    background-color: var(--background-color);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-md);
 
     p {
-      margin: 0 0 $spacing-sm 0;
-      color: $text-color;
+      margin: 0 0 var(--spacing-sm) 0;
+      color: var(--text-color);
     }
 
     ol {
-      margin: $spacing-sm 0;
-      padding-left: $spacing-lg;
+      margin: var(--spacing-sm) 0;
+      padding-left: var(--spacing-lg);
 
       li {
-        margin-bottom: $spacing-xs;
-        color: $text-color;
+        margin-bottom: var(--spacing-xs);
+        color: var(--text-color);
       }
     }
 
     .notification-examples {
-      margin-top: $spacing-md;
-      padding-top: $spacing-md;
-      border-top: 1px solid $border-color;
+      margin-top: var(--spacing-md);
+      padding-top: var(--spacing-md);
+      border-top: 1px solid var(--border-color);
 
       h4 {
-        margin: 0 0 $spacing-sm 0;
-        color: $text-color;
-        font-size: $font-size-base;
+        margin: 0 0 var(--spacing-sm) 0;
+        color: var(--text-color);
+        font-size: var(--font-size-base);
       }
 
       ul {
         margin: 0;
-        padding-left: $spacing-lg;
+        padding-left: var(--spacing-lg);
 
         li {
-          margin-bottom: $spacing-xs;
-          color: $secondary-text-color;
-          font-size: $font-size-sm;
+          margin-bottom: var(--spacing-xs);
+          color: var(--secondary-text-color);
+          font-size: var(--font-size-sm);
 
           strong {
-            color: $text-color;
+            color: var(--text-color);
           }
         }
       }
@@ -68,36 +71,36 @@
   }
 
   .form-group {
-    margin-bottom: $spacing-md;
+    margin-bottom: var(--spacing-md);
 
     label {
       display: block;
-      margin-bottom: $spacing-sm;
+      margin-bottom: var(--spacing-sm);
 
       .label-text {
         font-weight: bold;
-        color: $text-color;
+        color: var(--text-color);
       }
 
       .required-mark {
-        color: $danger-color;
-        margin-left: $spacing-xs;
+        color: var(--danger-color);
+        margin-left: var(--spacing-xs);
       }
     }
 
     select,
     input {
       width: 100%;
-      padding: $spacing-sm;
-      border: 1px solid $border-color;
-      border-radius: $border-radius-sm;
-      background-color: $white;
-      font-size: $font-size-base;
+      padding: var(--spacing-sm);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      background-color: white;
+      font-size: var(--font-size-base);
 
       &:focus {
         outline: none;
-        border-color: $primary-color;
-        box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.1);
       }
     }
   }
@@ -105,11 +108,11 @@
   .checkbox-group {
     display: flex;
     flex-direction: column;
-    gap: $spacing-sm;
-    padding: $spacing-sm;
-    background-color: $white;
-    border: 1px solid $border-color;
-    border-radius: $border-radius-sm;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
 
     .checkbox-label {
       display: flex;
@@ -118,51 +121,51 @@
 
       input[type='checkbox'] {
         width: auto;
-        margin-right: $spacing-sm;
+        margin-right: var(--spacing-sm);
       }
 
       .checkbox-text {
-        color: $text-color;
+        color: var(--text-color);
       }
 
       &:hover {
         .checkbox-text {
-          color: $primary-color;
+          color: var(--primary-color);
         }
       }
     }
   }
 
   .form-section {
-    margin-top: $spacing-lg;
-    padding-top: $spacing-md;
-    border-top: 1px solid $border-color;
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--border-color);
 
     h4 {
-      margin: 0 0 $spacing-md 0;
-      color: $text-color;
-      font-size: $font-size-base;
+      margin: 0 0 var(--spacing-md) 0;
+      color: var(--text-color);
+      font-size: var(--font-size-base);
     }
   }
 
   button {
-    background-color: $primary-color;
-    color: $white;
+    background-color: var(--primary-color);
+    color: white;
     border: none;
-    padding: $spacing-sm $spacing-lg;
-    border-radius: $border-radius-sm;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--border-radius-sm);
     font-weight: bold;
     cursor: pointer;
     transition: all 0.2s ease;
     width: 100%;
-    margin-top: $spacing-md;
+    margin-top: var(--spacing-md);
 
     &:hover:not(:disabled) {
-      background-color: darken($primary-color, 10%);
+      filter: brightness(0.9);
     }
 
     &:disabled {
-      background-color: $border-color;
+      background-color: var(--border-color);
       cursor: not-allowed;
     }
   }
@@ -170,10 +173,10 @@
 
 @media (max-width: 768px) {
   .notification-setting-form {
-    padding: $spacing-sm;
+    padding: var(--spacing-sm);
 
     .form-description {
-      padding: $spacing-sm;
+      padding: var(--spacing-sm);
     }
   }
 }

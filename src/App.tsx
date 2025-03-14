@@ -38,7 +38,7 @@ const NavBar = () => {
     <nav className="app-nav">
       <ul>
         <li>
-          <NavLink to="/">GitHub 管理</NavLink>
+          <NavLink to="/">ホーム</NavLink>
         </li>
         <li>
           <NavLink to="/slack">Slack 管理</NavLink>
@@ -52,7 +52,6 @@ const NavBar = () => {
 };
 
 // 遅延ローディング
-const GitHubPage = lazy(() => import('./pages/github/GitHubPage'));
 const SlackPage = lazy(() => import('./pages/slack/SlackPage'));
 
 const App: React.FC = () => {
@@ -68,14 +67,7 @@ const App: React.FC = () => {
                 <Routes>
                   <Route path="/" element={<HomePage />} />
                   <Route path="/token-check" element={<TokenCheck />} />
-                  <Route
-                    path="/slack"
-                    element={
-                      <SlackProvider>
-                        <SlackPage />
-                      </SlackProvider>
-                    }
-                  />
+                  <Route path="/slack" element={<SlackPage />} />
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </Suspense>

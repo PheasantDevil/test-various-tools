@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ErrorMessage from '../components/atoms/ErrorMessage';
 import LoadingSpinner from '../components/atoms/LoadingSpinner';
 import { getLatestCommits } from '../services/github/commitService';
+import { getGitHubToken } from '../utils/tokenUtils';
 import './HomePage.scss';
 
 interface Commit {
@@ -17,21 +18,45 @@ const HomePage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchCommits = async () => {
-      setLoading(true);
-      try {
-        const latestCommits = await getLatestCommits();
-        setCommits(latestCommits);
-      } catch (err) {
-        setError('更新履歴の取得に失敗しました');
-      } finally {
-        setLoading(false);
+  const fetchCommits = useCallback(async () => {
+    setLoading(true);
+    try {
+      const token = getGitHubToken();
+      if (!token) {
+        setError(
+          'GitHubトークンが設定されていません。GitHubとの連携設定を行ってください。',
+        );
+        return;
       }
-    };
 
-    fetchCommits();
+      const latestCommits = await getLatestCommits();
+      setCommits(latestCommits);
+      setError(null);
+    } catch (err) {
+      if (err instanceof Error) {
+        if (err.message === 'GitHub token not found') {
+          setError(
+            'GitHubトークンが設定されていません。GitHubとの連携設定を行ってください。',
+          );
+        } else if (
+          err.message ===
+          'GitHub owner or repo not configured in environment variables'
+        ) {
+          setError('GitHubの設定が不完全です。環境変数を確認してください。');
+        } else {
+          setError('更新履歴の取得に失敗しました: ' + err.message);
+        }
+      } else {
+        setError('更新履歴の取得に失敗しました');
+      }
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchCommits();
+  }, [fetchCommits]);
 
   return (
     <div className="home-page">
@@ -78,7 +103,12 @@ const HomePage: React.FC = () => {
           {loading ? (
             <LoadingSpinner />
           ) : error ? (
-            <ErrorMessage message={error} />
+            <ErrorMessage
+              message={error}
+              onRetry={
+                error.includes('トークン') ? undefined : () => fetchCommits()
+              }
+            />
           ) : (
             <div className="commit-list">
               {commits.map(commit => (
@@ -92,10 +122,22 @@ const HomePage: React.FC = () => {
                   <p className="commit-message">{commit.message}</p>
                 </div>
               ))}
+              {commits.length === 0 && (
+                <p className="no-commits">更新履歴はありません</p>
+              )}
             </div>
           )}
         </section>
       </div>
+
+      {error?.includes('トークン') && (
+        <div className="token-error-actions">
+          <p>GitHubとの連携が必要です</p>
+          <Link to="/github" className="action-button">
+            GitHub連携設定へ
+          </Link>
+        </div>
+      )}
 
       <section className="quick-actions">
         <h2>クイックアクション</h2>

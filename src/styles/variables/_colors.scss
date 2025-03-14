@@ -1,12 +1,20 @@
-// カラーパレット
-$primary-color: #0366d6;
-$primary-hover-color: #0358c3;
-$success-color: #2ea44f;
-$success-hover-color: #2c974b;
-$danger-color: #c62828;
-$danger-hover-color: #b71c1c;
-$text-color: #24292e;
-$secondary-text-color: #586069;
-$border-color: #e1e4e8;
-$background-color: #f6f8fa;
-$white: #fff;
+// Base colors
+$primary-color: #0066cc;
+$primary-color-rgb: 0, 102, 204;
+$secondary-color: #6c757d;
+$secondary-color-rgb: 108, 117, 125;
+
+// Text colors
+$text-color: #333333;
+$secondary-text-color: #666666;
+
+// UI colors
+$background-color: #f8f9fa;
+$border-color: #dee2e6;
+$danger-color: #dc3545;
+$success-color: #28a745;
+$warning-color: #ffc107;
+
+// Common colors
+$white: #ffffff;
+$black: #000000;

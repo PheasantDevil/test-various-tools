@@ -1,9 +1,76 @@
-@forward './variables/borders';
-@forward './variables/breakpoints';
-@forward './variables/colors';
-@forward './variables/effects';
-@forward './variables/spacing';
-@forward './variables/typography';
+// Import all variables
+@use './variables/borders' as borders;
+@use './variables/breakpoints' as breakpoints;
+@use './variables/colors' as colors;
+@use './variables/effects' as effects;
+@use './variables/spacing' as spacing;
+@use './variables/typography' as type;
 
-// 他の共通スタイルがあれば追加
-@forward './mixins';
+// Make variables available globally
+:root {
+  // Colors
+  --primary-color: #{colors.$primary-color};
+  --primary-color-rgb: #{colors.$primary-color-rgb};
+  --secondary-color: #{colors.$secondary-color};
+  --secondary-color-rgb: #{colors.$secondary-color-rgb};
+  --text-color: #{colors.$text-color};
+  --secondary-text-color: #{colors.$secondary-text-color};
+  --background-color: #{colors.$background-color};
+  --border-color: #{colors.$border-color};
+  --danger-color: #{colors.$danger-color};
+  --success-color: #{colors.$success-color};
+  --warning-color: #{colors.$warning-color};
+  --white: #{colors.$white};
+  --black: #{colors.$black};
+
+  // Typography
+  --font-size-sm: #{type.$font-size-sm};
+  --font-size-base: #{type.$font-size-base};
+  --font-size-lg: #{type.$font-size-lg};
+  --font-size-xl: #{type.$font-size-xl};
+  --font-family-base: #{type.$font-family-base};
+  --font-family-code: #{type.$font-family-code};
+  --font-weight-normal: #{type.$font-weight-normal};
+  --font-weight-bold: #{type.$font-weight-bold};
+  --line-height-base: #{type.$line-height-base};
+  --line-height-heading: #{type.$line-height-heading};
+
+  // Spacing
+  --spacing-xs: #{spacing.$spacing-xs};
+  --spacing-sm: #{spacing.$spacing-sm};
+  --spacing-md: #{spacing.$spacing-md};
+  --spacing-lg: #{spacing.$spacing-lg};
+  --spacing-xl: #{spacing.$spacing-xl};
+
+  // Borders
+  --border-radius-sm: #{borders.$border-radius-sm};
+  --border-radius-md: #{borders.$border-radius-md};
+  --border-radius-lg: #{borders.$border-radius-lg};
+  --border-width-thin: #{effects.$border-width-thin};
+  --border-width-medium: #{effects.$border-width-medium};
+  --border-width-thick: #{effects.$border-width-thick};
+
+  // Effects
+  --shadow-sm: #{effects.$shadow-sm};
+  --shadow-md: #{effects.$shadow-md};
+  --shadow-lg: #{effects.$shadow-lg};
+  --transition-fast: #{effects.$transition-fast};
+  --transition-normal: #{effects.$transition-normal};
+  --transition-slow: #{effects.$transition-slow};
+}
+
+// Global styles
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: var(--line-height-base);
+}

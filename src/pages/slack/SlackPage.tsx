@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import { SlackChannel } from 'services/slack/channelService';
+import React, { useCallback, useEffect, useRef } from 'react';
 import ErrorMessage from '../../components/atoms/ErrorMessage';
 import LoadingSpinner from '../../components/atoms/LoadingSpinner';
 import ChannelCard from '../../components/molecules/slack/ChannelCard';
 import CreateChannelForm from '../../components/molecules/slack/CreateChannelForm';
 import NotificationSettingForm from '../../components/molecules/slack/NotificationSettingForm';
 import { useSlack } from '../../contexts/SlackContext';
+import { SlackChannel } from '../../services/slack/channelService';
 import './SlackPage.scss';
 
 const SlackPage: React.FC = () => {
@@ -27,23 +27,44 @@ const SlackPage: React.FC = () => {
     createChannel,
   } = useSlack();
 
-  // 初回マウント時のみ実行するように修正
-  useEffect(() => {
-    // 初期データの取得
-    const initializeData = async () => {
+  // 初期化済みかどうかを追跡するref
+  const isInitializedRef = useRef(false);
+
+  // メモ化された初期化関数
+  const initializeData = useCallback(async () => {
+    if (isInitializedRef.current) return;
+
+    try {
       await Promise.all([
         fetchChannels(),
         fetchNotificationSettings(),
         fetchRepositories(),
       ]);
-    };
+      isInitializedRef.current = true;
+    } catch (error) {
+      console.error('Failed to initialize data:', error);
+      isInitializedRef.current = false;
+    }
+  }, [fetchChannels, fetchNotificationSettings, fetchRepositories]);
 
+  useEffect(() => {
     initializeData();
-  }, []); // 依存配列を空にして初回のみ実行
+  }, [initializeData]);
+
+  // クリーンアップ用のuseEffect
+  useEffect(() => {
+    return () => {
+      isInitializedRef.current = false;
+    };
+  }, []);
 
   const handleSelectChannel = async (channel: SlackChannel) => {
-    await selectChannel(channel);
-    await fetchChannelHistory(channel.id, 20);
+    try {
+      await selectChannel(channel);
+      await fetchChannelHistory(channel.id, 20);
+    } catch (error) {
+      console.error('Failed to select channel:', error);
+    }
   };
 
   const handleRetry = async () => {

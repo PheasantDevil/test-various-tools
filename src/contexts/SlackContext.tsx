@@ -55,13 +55,30 @@ export const SlackProvider: React.FC<{ children: ReactNode }> = ({
   const [notificationSettings, setNotificationSettings] = useState<
     NotificationSetting[]
   >([]);
-  const [lastFetchTime, setLastFetchTime] = useState<number>(0);
   const [repositories, setRepositories] = useState<Repository[]>([]);
+
+  // キャッシュ用の状態
+  const [lastFetchTimes, setLastFetchTimes] = useState<Record<string, number>>({
+    channels: 0,
+    notifications: 0,
+    repositories: 0,
+  });
   const CACHE_DURATION = 60000; // 1分
 
+  const shouldFetch = (key: string) => {
+    const lastFetch = lastFetchTimes[key] || 0;
+    return Date.now() - lastFetch >= CACHE_DURATION;
+  };
+
+  const updateLastFetchTime = (key: string) => {
+    setLastFetchTimes(prev => ({
+      ...prev,
+      [key]: Date.now(),
+    }));
+  };
+
   const fetchChannels = async () => {
-    // 前回のフェッチから1分以内の場合はスキップ
-    if (Date.now() - lastFetchTime < CACHE_DURATION) {
+    if (!shouldFetch('channels')) {
       return;
     }
 
@@ -71,7 +88,7 @@ export const SlackProvider: React.FC<{ children: ReactNode }> = ({
     try {
       const data = await getLogChannels();
       setChannels(data);
-      setLastFetchTime(Date.now());
+      updateLastFetchTime('channels');
     } catch (err) {
       setError('Failed to fetch channels');
       console.error(err);
@@ -119,12 +136,17 @@ export const SlackProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const fetchNotificationSettings = async () => {
+    if (!shouldFetch('notifications')) {
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
     try {
       const settings = getNotificationSettings();
       setNotificationSettings(settings);
+      updateLastFetchTime('notifications');
     } catch (err) {
       setError('Failed to fetch notification settings');
       console.error(err);
@@ -151,12 +173,17 @@ export const SlackProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const fetchRepositories = async () => {
+    if (!shouldFetch('repositories')) {
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
     try {
       const repos = await getRepositories();
       setRepositories(repos);
+      updateLastFetchTime('repositories');
     } catch (err) {
       setError('Failed to fetch repositories');
       console.error(err);

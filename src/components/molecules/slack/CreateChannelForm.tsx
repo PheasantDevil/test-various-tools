@@ -6,13 +6,13 @@ import './CreateChannelForm.scss';
 interface CreateChannelFormProps {
   repositories: Repository[];
   onSubmit: (params: CreateChannelParams) => Promise<void>;
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
 const CreateChannelForm: React.FC<CreateChannelFormProps> = ({
   repositories,
   onSubmit,
-  isLoading,
+  isLoading = false,
 }) => {
   const [selectedRepo, setSelectedRepo] = useState<string>('');
   const [description, setDescription] = useState<string>('');
