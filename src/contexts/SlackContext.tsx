@@ -1,7 +1,13 @@
 import React, { ReactNode, createContext, useContext, useState } from 'react';
 import {
+  Repository,
+  getRepositories,
+} from '../services/github/repositoryService';
+import {
+  CreateChannelParams,
   SlackChannel,
   SlackMessage,
+  createLogChannel,
   getChannelHistory,
   getGithubAppPermissions,
   getLatestMessage,
@@ -20,6 +26,7 @@ interface SlackContextType {
   permissions: string[];
   loading: boolean;
   error: string | null;
+  repositories: Repository[];
   fetchChannels: () => Promise<void>;
   selectChannel: (channel: SlackChannel) => Promise<void>;
   channelHistory: SlackMessage[];
@@ -27,6 +34,8 @@ interface SlackContextType {
   fetchChannelHistory: (channelId: string, limit?: number) => Promise<void>;
   fetchNotificationSettings: () => Promise<void>;
   saveNotificationSetting: (setting: NotificationSetting) => Promise<void>;
+  fetchRepositories: () => Promise<void>;
+  createChannel: (params: CreateChannelParams) => Promise<void>;
 }
 
 const SlackContext = createContext<SlackContextType | undefined>(undefined);
@@ -46,12 +55,30 @@ export const SlackProvider: React.FC<{ children: ReactNode }> = ({
   const [notificationSettings, setNotificationSettings] = useState<
     NotificationSetting[]
   >([]);
-  const [lastFetchTime, setLastFetchTime] = useState<number>(0);
+  const [repositories, setRepositories] = useState<Repository[]>([]);
+
+  // キャッシュ用の状態
+  const [lastFetchTimes, setLastFetchTimes] = useState<Record<string, number>>({
+    channels: 0,
+    notifications: 0,
+    repositories: 0,
+  });
   const CACHE_DURATION = 60000; // 1分
 
+  const shouldFetch = (key: string) => {
+    const lastFetch = lastFetchTimes[key] || 0;
+    return Date.now() - lastFetch >= CACHE_DURATION;
+  };
+
+  const updateLastFetchTime = (key: string) => {
+    setLastFetchTimes(prev => ({
+      ...prev,
+      [key]: Date.now(),
+    }));
+  };
+
   const fetchChannels = async () => {
-    // 前回のフェッチから1分以内の場合はスキップ
-    if (Date.now() - lastFetchTime < CACHE_DURATION) {
+    if (!shouldFetch('channels')) {
       return;
     }
 
@@ -61,7 +88,7 @@ export const SlackProvider: React.FC<{ children: ReactNode }> = ({
     try {
       const data = await getLogChannels();
       setChannels(data);
-      setLastFetchTime(Date.now());
+      updateLastFetchTime('channels');
     } catch (err) {
       setError('Failed to fetch channels');
       console.error(err);
@@ -109,12 +136,17 @@ export const SlackProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const fetchNotificationSettings = async () => {
+    if (!shouldFetch('notifications')) {
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
     try {
       const settings = getNotificationSettings();
       setNotificationSettings(settings);
+      updateLastFetchTime('notifications');
     } catch (err) {
       setError('Failed to fetch notification settings');
       console.error(err);
@@ -140,6 +172,41 @@ export const SlackProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
+  const fetchRepositories = async () => {
+    if (!shouldFetch('repositories')) {
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const repos = await getRepositories();
+      setRepositories(repos);
+      updateLastFetchTime('repositories');
+    } catch (err) {
+      setError('Failed to fetch repositories');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const createChannel = async (params: CreateChannelParams) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      await createLogChannel(params);
+      await fetchChannels(); // チャンネル一覧を更新
+    } catch (err) {
+      setError('Failed to create channel');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <SlackContext.Provider
       value={{
@@ -149,6 +216,7 @@ export const SlackProvider: React.FC<{ children: ReactNode }> = ({
         permissions,
         loading,
         error,
+        repositories,
         fetchChannels,
         selectChannel,
         channelHistory,
@@ -156,6 +224,8 @@ export const SlackProvider: React.FC<{ children: ReactNode }> = ({
         fetchChannelHistory,
         fetchNotificationSettings,
         saveNotificationSetting: handleSaveNotificationSetting,
+        fetchRepositories,
+        createChannel,
       }}
     >
       {children}

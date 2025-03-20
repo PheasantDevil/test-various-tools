@@ -1,19 +1,37 @@
-@use './styles/index.scss' as *;
+@use 'styles/index.scss' as *;
+@use './styles/variables/typography' as *;
+@use './styles/variables/colors' as *;
+@use './styles/variables/spacing' as *;
+@use './styles/variables/borders' as *;
+@use './styles/variables/effects' as *;
+
+body {
+  font-family: var(--font-family-base);
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
 .App {
-  font-family: $font-family-base;
+  font-family: var(--font-family-base);
   max-width: 1200px;
   margin: 0 auto;
-  padding: $spacing-lg;
-  color: $text-color;
+  padding: var(--spacing-lg);
+  color: var(--text-color);
 }
 
 .app-nav {
-  background-color: $background-color;
-  padding: $spacing-md;
-  margin-bottom: $spacing-lg;
-  border-radius: $border-radius-md;
-  box-shadow: $shadow-sm;
+  background-color: var(--background-color);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
 
   ul {
     display: flex;
@@ -22,21 +40,21 @@
     margin: 0;
 
     li {
-      margin-right: $spacing-lg;
+      margin-right: var(--spacing-lg);
 
       a {
         text-decoration: none;
-        color: $text-color;
+        color: var(--text-color);
         font-weight: bold;
-        font-size: $font-size-normal;
-        padding: $spacing-sm 0;
-        border-bottom: $border-width-medium solid transparent;
-        transition: all $transition-fast;
+        font-size: var(--font-size-base);
+        padding: var(--spacing-sm) 0;
+        border-bottom: var(--border-width-medium) solid transparent;
+        transition: all var(--transition-fast);
 
         &:hover,
         &.active {
-          color: $primary-color;
-          border-bottom-color: $primary-color;
+          color: var(--primary-color);
+          border-bottom-color: var(--primary-color);
         }
       }
     }
@@ -44,37 +62,37 @@
 }
 
 .app-content {
-  background-color: #fff;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 24px;
+  background-color: var(--white);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-lg);
 }
 
-// 共通スタイル
+// Common styles
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  color: #24292e;
+  color: var(--text-color);
 }
 
 button {
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color var(--transition-fast);
 }
 
 input,
 select,
 textarea {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font-family-base);
 }
 
-// レスポンシブデザイン
+// Responsive design
 @media (max-width: 768px) {
   .App {
-    padding: 16px;
+    padding: var(--spacing-md);
   }
 
   .app-nav ul {
@@ -82,39 +100,39 @@ textarea {
 
     li {
       margin-right: 0;
-      margin-bottom: 12px;
+      margin-bottom: var(--spacing-md);
     }
   }
 
   .app-content {
-    padding: 16px;
+    padding: var(--spacing-md);
   }
 }
 
 // GitHub Page Styles
 .github-page {
   h1 {
-    margin-bottom: 20px;
+    margin-bottom: var(--spacing-lg);
   }
 
   form {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
 
     .form-group {
       display: flex;
       flex-direction: column;
 
       label {
-        margin-bottom: 5px;
+        margin-bottom: var(--spacing-xs);
       }
 
       input {
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
+        padding: var(--spacing-sm);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-sm);
       }
     }
   }

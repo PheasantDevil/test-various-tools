@@ -27,12 +27,12 @@ export interface SlackNotification {
 
 export const getNotifications = async (): Promise<SlackNotification[]> => {
   try {
-    // 実際のAPIがない場合はモックデータを返す
+    // モックデータを返す（実際のAPIが実装されるまで）
     return [
       {
         id: '1',
         channel: 'C123456',
-        text: 'New GitHub issue opened',
+        text: 'New issue opened',
         timestamp: '1609459200.000100',
         read: false,
       },
