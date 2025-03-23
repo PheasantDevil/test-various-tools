@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useToast } from '../../../contexts/ToastContext';
 import { Repository } from '../../../services/github/repositoryService';
-import { CreateChannelParams } from '../../../services/slack/channelService';
+import {
+  CreateChannelParams,
+  SlackUser,
+  getSlackUsers,
+} from '../../../services/slack/channelService';
 import './CreateChannelForm.scss';
 
 interface CreateChannelFormProps {
@@ -16,18 +21,78 @@ const CreateChannelForm: React.FC<CreateChannelFormProps> = ({
 }) => {
   const [selectedRepo, setSelectedRepo] = useState<string>('');
   const [description, setDescription] = useState<string>('');
+  const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
+  const [users, setUsers] = useState<SlackUser[]>([]);
+  const [loadingUsers, setLoadingUsers] = useState<boolean>(false);
+  const { showToast } = useToast();
+
+  // コンポーネントマウント時にSlackユーザーリストを取得
+  useEffect(() => {
+    let isMounted = true;
+    const fetchUsers = async () => {
+      try {
+        setLoadingUsers(true);
+        const slackUsers = await getSlackUsers();
+        if (isMounted) {
+          setUsers(slackUsers);
+        }
+      } catch (error: any) {
+        // 429エラー（Too Many Requests）の場合は、エラーログを出力しない
+        if (!(error.response && error.response.status === 429)) {
+          console.error('Failed to fetch Slack users:', error);
+        }
+        if (isMounted) {
+          // 429エラーの場合は特定のエラーメッセージを表示しない
+          if (!(error.response && error.response.status === 429)) {
+            showToast('Slackユーザーの取得に失敗しました', 'error');
+          }
+        }
+      } finally {
+        if (isMounted) {
+          setLoadingUsers(false);
+        }
+      }
+    };
+
+    fetchUsers();
+
+    // クリーンアップ関数
+    return () => {
+      isMounted = false;
+    };
+  }, []); // 空の依存配列で初回のみ実行
+
+  const handleMemberChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const options = Array.from(e.target.selectedOptions);
+    const selectedValues = options.map(option => option.value);
+    setSelectedMembers(selectedValues);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedRepo) return;
 
-    await onSubmit({
-      repositoryName: selectedRepo,
-      description: description || undefined,
-    });
-    // フォームをリセット
-    setSelectedRepo('');
-    setDescription('');
+    try {
+      await onSubmit({
+        repositoryName: selectedRepo,
+        description: description || undefined,
+        members: selectedMembers.length > 0 ? selectedMembers : undefined,
+      });
+
+      // 成功メッセージをトースト通知で表示
+      showToast(`チャンネルが正常に作成されました`, 'success');
+
+      // フォームをリセット
+      setSelectedRepo('');
+      setDescription('');
+      setSelectedMembers([]);
+    } catch (error) {
+      // エラーメッセージをトースト通知で表示
+      showToast(
+        `チャンネル作成に失敗しました: ${error instanceof Error ? error.message : 'エラーが発生しました'}`,
+        'error',
+      );
+    }
   };
 
   return (
@@ -67,6 +132,31 @@ const CreateChannelForm: React.FC<CreateChannelFormProps> = ({
           placeholder="チャンネルの目的や用途を入力してください"
           disabled={isLoading}
         />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="members">チャンネルメンバー（オプション）:</label>
+        <select
+          id="members"
+          multiple
+          value={selectedMembers}
+          onChange={handleMemberChange}
+          disabled={isLoading || loadingUsers}
+          className="members-select"
+        >
+          {loadingUsers ? (
+            <option disabled>ユーザーを読み込み中...</option>
+          ) : (
+            users.map(user => (
+              <option key={user.id} value={user.id}>
+                {user.profile.display_name || user.real_name || user.name}
+              </option>
+            ))
+          )}
+        </select>
+        <small className="help-text">
+          Ctrlキー（Macの場合はCommandキー）を押しながらクリックして複数選択できます
+        </small>
       </div>
 
       <button type="submit" disabled={isLoading || !selectedRepo}>
