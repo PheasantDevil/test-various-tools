@@ -54,7 +54,6 @@ export const markAsRead = async (notificationId: string): Promise<void> => {
   try {
     // 実際のAPIがない場合は成功を返す
     console.log(`Marking notification ${notificationId} as read`);
-    return;
   } catch (error) {
     console.error('Failed to mark notification as read:', error);
     throw error;

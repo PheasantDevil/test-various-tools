@@ -11,6 +11,7 @@ import './App.scss';
 import LoadingSpinner from './components/atoms/LoadingSpinner';
 import { GitHubProvider } from './contexts/GitHubContext';
 import { SlackProvider } from './contexts/SlackContext';
+import { ToastProvider } from './contexts/ToastContext';
 import HomePage from './pages/HomePage';
 import TokenCheck from './pages/TokenCheck';
 
@@ -58,22 +59,24 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="app">
-        <GitHubProvider>
-          <SlackProvider>
-            <NavBar />
+        <ToastProvider>
+          <GitHubProvider>
+            <SlackProvider>
+              <NavBar />
 
-            <main className="app-content">
-              <Suspense fallback={<LoadingSpinner />}>
-                <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/token-check" element={<TokenCheck />} />
-                  <Route path="/slack" element={<SlackPage />} />
-                  <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
-              </Suspense>
-            </main>
-          </SlackProvider>
-        </GitHubProvider>
+              <main className="app-content">
+                <Suspense fallback={<LoadingSpinner />}>
+                  <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/token-check" element={<TokenCheck />} />
+                    <Route path="/slack" element={<SlackPage />} />
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                  </Routes>
+                </Suspense>
+              </main>
+            </SlackProvider>
+          </GitHubProvider>
+        </ToastProvider>
       </div>
     </Router>
   );

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useToast } from '../../../contexts/ToastContext';
 import { SlackChannel } from '../../../services/slack/channelService';
 import { NotificationSetting } from '../../../services/slack/notificationService';
 import './NotificationSettingForm.scss';
@@ -16,8 +17,10 @@ const NotificationSettingForm: React.FC<NotificationSettingFormProps> = ({
   const [events, setEvents] = useState<string[]>([]);
   const [owner, setOwner] = useState<string>('');
   const [repo, setRepo] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const { showToast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!channelId || events.length === 0 || !owner || !repo) return;
 
@@ -27,13 +30,30 @@ const NotificationSettingForm: React.FC<NotificationSettingFormProps> = ({
       repositories: [{ owner, repo }],
     };
 
-    onSave(setting);
+    // 送信中状態にする
+    setIsSubmitting(true);
 
-    // フォームをリセット
-    setChannelId('');
-    setEvents([]);
-    setOwner('');
-    setRepo('');
+    try {
+      await onSave(setting);
+
+      // 成功メッセージをトースト通知で表示
+      showToast('通知設定が正常に保存されました', 'success');
+
+      // フォームをリセット
+      setChannelId('');
+      setEvents([]);
+      setOwner('');
+      setRepo('');
+    } catch (error) {
+      // エラーメッセージをトースト通知で表示
+      showToast(
+        `通知設定の保存に失敗しました: ${error instanceof Error ? error.message : 'エラーが発生しました'}`,
+        'error',
+      );
+    } finally {
+      // 送信中状態を解除
+      setIsSubmitting(false);
+    }
   };
 
   const handleEventChange = (event: string) => {
@@ -183,9 +203,11 @@ const NotificationSettingForm: React.FC<NotificationSettingFormProps> = ({
 
         <button
           type="submit"
-          disabled={!channelId || events.length === 0 || !owner || !repo}
+          disabled={
+            isSubmitting || !channelId || events.length === 0 || !owner || !repo
+          }
         >
-          保存
+          {isSubmitting ? '保存中...' : '保存'}
         </button>
       </form>
     </div>

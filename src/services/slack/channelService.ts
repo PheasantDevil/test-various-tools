@@ -23,10 +23,34 @@ export interface SlackMessage {
   type: string;
 }
 
+export interface SlackUser {
+  id: string;
+  name: string;
+  real_name: string;
+  profile: {
+    display_name: string;
+    email?: string;
+    image_24?: string;
+  };
+}
+
 export interface CreateChannelParams {
   repositoryName: string;
   description?: string | undefined;
+  members?: string[] | undefined; // メンバーのIDリスト
 }
+
+// ユーザーリストのキャッシュデータ
+interface UserCache {
+  users: SlackUser[];
+  timestamp: number;
+}
+
+// キャッシュの有効期間（10分 = 600,000ミリ秒）
+const CACHE_DURATION = 600000;
+
+// ユーザーリストのキャッシュ
+let userCache: UserCache | null = null;
 
 export const getChannels = async (): Promise<SlackChannel[]> => {
   try {
@@ -103,20 +127,70 @@ export const getGithubAppPermissions = async (
   ];
 };
 
+export const getSlackUsers = async (): Promise<SlackUser[]> => {
+  // キャッシュがあり、まだ有効期間内であれば、キャッシュを返す
+  const now = Date.now();
+  if (userCache && now - userCache.timestamp < CACHE_DURATION) {
+    return userCache.users;
+  }
+
+  try {
+    const response = await slackApiClient.get('/users.list');
+    const users = response.data.members.filter(
+      (member: any) => !member.is_bot && !member.deleted,
+    );
+
+    // 結果をキャッシュに保存
+    userCache = {
+      users,
+      timestamp: now,
+    };
+
+    return users;
+  } catch (error: any) {
+    // キャッシュが存在する場合は常にキャッシュのデータを返す
+    if (userCache) {
+      // 429エラー（Too Many Requests）の場合は、エラーログを出力しない
+      if (!(error.response && error.response.status === 429)) {
+        console.error('Failed to fetch Slack users:', error);
+      }
+      return userCache.users;
+    }
+
+    // キャッシュがない場合、429エラー以外は通常通りログを出力
+    if (!(error.response && error.response.status === 429)) {
+      console.error('Failed to fetch Slack users:', error);
+    }
+    throw error;
+  }
+};
+
 export const createLogChannel = async (
   params: CreateChannelParams,
 ): Promise<SlackChannel> => {
   const channelName = `log_gh_${params.repositoryName.toLowerCase()}`;
   try {
+    // チャンネルを作成
     const response = await slackApiClient.post('/conversations.create', {
       name: channelName,
       is_private: false,
     });
 
+    const channelId = response.data.channel.id;
+
+    // 説明を設定（オプション）
     if (params.description) {
       await slackApiClient.post('/conversations.setPurpose', {
-        channel: response.data.channel.id,
+        channel: channelId,
         purpose: params.description,
+      });
+    }
+
+    // メンバーを招待（オプション）
+    if (params.members && params.members.length > 0) {
+      await slackApiClient.post('/conversations.invite', {
+        channel: channelId,
+        users: params.members.join(','),
       });
     }
 
