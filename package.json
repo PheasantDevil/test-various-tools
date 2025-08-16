@@ -128,7 +128,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/material": "^7.0.1",
     "@octokit/rest": "^21.1.1",
-    "@slack/web-api": "^7.9.1",
+    "@slack/web-api": "^7.9.3",
     "axios": "^1.8.4",
     "react-router-dom": "^7.4.1"
   },
