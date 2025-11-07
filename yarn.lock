@@ -3071,18 +3071,18 @@
   dependencies:
     "@types/node" ">=18.0.0"
 
-"@slack/types@^2.9.0":
-  version "2.14.0"
-  resolved "https://registry.yarnpkg.com/@slack/types/-/types-2.14.0.tgz#913946b4bcb635dad1d39ceca73699215c38cf6f"
-  integrity sha512-n0EGm7ENQRxlXbgKSrQZL69grzg1gHLAVd+GlRVQJ1NSORo0FrApR7wql/gaKdu2n4TO83Sq/AmeUOqD60aXUA==
+"@slack/types@^2.18.0":
+  version "2.18.0"
+  resolved "https://registry.yarnpkg.com/@slack/types/-/types-2.18.0.tgz#84dab2ebb4593049fa6757a3f69318ffe3876c54"
+  integrity sha512-ZKrdeoppbM+3l2KKOi4/3oFYKCEwiW3dQfdHZDcecJ9rAmEqWPnARYmac9taZNitb0xnSgu6GOpHgwaKI8se2g==
 
-"@slack/web-api@^7.10.0":
-  version "7.10.0"
-  resolved "https://registry.yarnpkg.com/@slack/web-api/-/web-api-7.10.0.tgz#e64eaa01eb0e2e7d60fc19d8789698c79afa2a90"
-  integrity sha512-kT+07JvOqpYH3b/ttVo3iqKIFiHV2NKmD6QUc/F7HrjCgSdSA10zxqi0euXEF2prB49OU7SfjadzQ0WhNc7tiw==
+"@slack/web-api@^7.12.0":
+  version "7.12.0"
+  resolved "https://registry.yarnpkg.com/@slack/web-api/-/web-api-7.12.0.tgz#0c10aa9ffab51b628ddf05a13dd18c3358e19748"
+  integrity sha512-LrDxjYyqjeYYQGVdVZ6EYHunFmzveOr2pFpShr6TzW4KNFpdNNnpKekjtMg0PJlOsMibSySLGQqiBZQDasmRCA==
   dependencies:
     "@slack/logger" "^4.0.0"
-    "@slack/types" "^2.9.0"
+    "@slack/types" "^2.18.0"
     "@types/node" ">=18.0.0"
     "@types/retry" "0.12.0"
     axios "^1.11.0"
