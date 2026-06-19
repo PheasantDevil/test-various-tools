@@ -28,7 +28,7 @@
     "update-sass": "node scripts/update-sass-imports.js"
   },
   "devDependencies": {
-    "@babel/core": "7.26.9",
+    "@babel/core": "8.0.1",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@commitlint/cli": "^20.5.3",
     "@commitlint/config-conventional": "^20.5.3",
