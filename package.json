@@ -129,7 +129,7 @@
     "@mui/material": "^7.3.11",
     "@octokit/rest": "^22.0.1",
     "@slack/web-api": "^7.13.0",
-    "axios": "^1.13.2",
+    "axios": "^1.20.0",
     "react-router-dom": "^7.9.6"
   },
   "commitlint": {
