@@ -33,7 +33,7 @@
     "@commitlint/cli": "^20.5.3",
     "@commitlint/config-conventional": "^20.5.3",
     "@craco/craco": "^7.1.0",
-    "@pmmmwh/react-refresh-webpack-plugin": "0.6.2",
+    "@pmmmwh/react-refresh-webpack-plugin": "0.6.3",
     "@svgr/webpack": "8.1.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
