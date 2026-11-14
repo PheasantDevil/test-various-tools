@@ -130,7 +130,7 @@
     "@octokit/rest": "^22.0.1",
     "@slack/web-api": "^7.19.0",
     "axios": "^1.21.1",
-    "react-router-dom": "^7.9.6"
+    "react-router-dom": "^7.18.5"
   },
   "commitlint": {
     "extends": [
