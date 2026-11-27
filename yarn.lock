@@ -5491,10 +5491,10 @@ before-after-hook@^4.0.0:
   resolved "https://registry.yarnpkg.com/before-after-hook/-/before-after-hook-4.0.0.tgz#cf1447ab9160df6a40f3621da64d6ffc36050cb9"
   integrity sha512-q6tR3RPqIB1pMiTRMFcZwuG5T8vwp+vUvEG0vuI6B+Rikh5BfPp2fQ82c925FOs+b0lcFQ8CFrL+KbilfZFhOQ==
 
-bfj@9.1.4:
-  version "9.1.4"
-  resolved "https://registry.yarnpkg.com/bfj/-/bfj-9.1.4.tgz#4d9fd37bb25af6bd690aeffc677b2a998fed43fd"
-  integrity sha512-r4qEuACygiLfYg6KDQRfaxEwScyIUsf8ETrvS1yJQMRLEMgzV4u9wEUFjdetEOIfjDYHjhcR/fsARFcfNz0hhw==
+bfj@9.1.5:
+  version "9.1.5"
+  resolved "https://registry.yarnpkg.com/bfj/-/bfj-9.1.5.tgz#de6571a238bae13c85fcc48ef69107e357e1075b"
+  integrity sha512-aDa238XCsay4Ga2ztk4ZBxLRRKoKAF7Li/hEWScg/urAlWQVteBn2OBJT6SGyLfUcF2vB9N6dpSJg/jchtPeAw==
   dependencies:
     check-types "^11.2.3"
     hoopy "^0.1.4"
